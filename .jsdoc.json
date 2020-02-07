@@ -1,0 +1,10 @@
+{
+  "opts":{
+    "template": "node_modules/tui-jsdoc-template"
+  },
+  "templates": {
+    "logo": "none",
+    "name": "Valarium Bot Documentation",
+    "footerText": "This documentation is not complete yet and is subject to change"
+  }
+}

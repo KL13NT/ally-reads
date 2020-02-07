@@ -1,0 +1,18 @@
+{
+  "name": "AllyReads",
+  "version": "1.0.0",
+  "description": "An accessibility suite giving you control over what you read.",
+  "main": "index.js",
+  "repository": "git@github.com:KL13NT/ally-reads.git",
+  "author": "Nabil <nabil.tharwat@outlook.com>",
+  "license": "gpl-3.0",
+  "scripts": {
+    "ext": "node \"./node_modules/web-ext/bin/web-ext\" run",
+    "lint": "eslint --ext .jsx --ext .js ./src --config .eslintrc.js",
+    "test": "jest --colors --expand --logHeapUsage --config jest.config.js"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "web-ext": "^4.0.0"
+  }
+}
