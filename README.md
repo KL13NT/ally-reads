@@ -8,6 +8,7 @@ An accessibility suite giving you control over what you read.
 - [Contributing](#Contributing)
 - [Lifecycle](#Lifecycle)
 - [Upcoming Features](#Upcoming-Features)
+- [Known Bugs](#Known-Bugs)
 - [License](#License)
 
 ## Developer Notes
@@ -34,11 +35,16 @@ I develop features and fix bugs and push them to `develop`, when it's time to re
 ## Upcoming Features
 - **Smarter word breaks**: You may notice that sometimes the end of sentences come on a new line instead of completing the current one, and other spacing-related bugs. These are caused by the way the extension handles words and spacing. Will be fixing it soon.
 
+- **Better DOM mutation detection**: The current algorithm is slow in detecting changes to the DOM and reacting to it. And it also lacks safety from collision caused by *separate* mutations.
+
 - **Font selection list**: To allow you to select a font for all paragraphs on all websites, or maybe even all elements. But to preserve the look and feel of websites there would be an option for the user to specify which behaviour they want.
 
 - **Text foreground & background colour selection**: Colour what you read.
 
 - **Instant word definitions**: Click a word and get definitions for it right away!
+
+## Known Bugs
+- Navigating different pages in the same tab causes the e
 
 ## License
 This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. Find the license [here](../license)

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+      
+        <meta name="author" content="Nabil Tharwat">
+      
+        <meta name="description" content="Control what you read">
+      
+    
+    <title>content_script.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/search.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.5/fuse.min.js"></script> -->
+    <script src="scripts/fuse.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme.css">
+    
+    
+    
+<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"/>
+                <path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z"/>
+            </g>
+        </symbol>
+    </defs>
+</svg>
+
+</head>
+<body>
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html"><div class="text">Ally Reads!</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://kl13nt.github.io/ally-reads/index.html' class='' id='' target=''>Ally Reads!</a></li><li><a href='https://github.com/KL13NT/ally-reads' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="DOMManipulator.html">DOMManipulator</a><ul class='methods'><li data-type='method'><a href="DOMManipulator.html#formatText">formatText</a></li><li data-type='method'><a href="DOMManipulator.html#reformatDOM">reformatDOM</a></li><li data-type='method'><a href="DOMManipulator.html#scanDOM">scanDOM</a></li><li data-type='method'><a href="DOMManipulator.html#setState">setState</a></li><li data-type='method'><a href="DOMManipulator.html#shouldUpdate">shouldUpdate</a></li><li data-type='method'><a href="DOMManipulator.html#updateState">updateState</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#determineNodeType">determineNodeType</a></li><li><a href="global.html#parseAndAttachCSS">parseAndAttachCSS</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#updatePreview">updatePreview</a></li><li><a href="global.html#updateSelectorValue">updateSelectorValue</a></li><li><a href="global.html#updateStorage">updateStorage</a></li><li><a href="global.html#updateValueDisplay">updateValueDisplay</a></li><li><a href="global.html#updateVisualDefaults">updateVisualDefaults</a></li><li><a href="global.html#watchSelector">watchSelector</a></li></ul></div>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">content_script.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Extension settings custom schema
+ * @typedef {Object} ExtensionSettings
+ * @property {object} style defines style values
+ * @property {number} style.font-size
+ * @property {number} style.line-height
+ * @property {number} style.letter-spacing
+ * @property {number} style.word-spacing
+ * @property {object} styleUnits defines style units
+ * @property {string} styleUnits.font-size
+ * @property {string} styleUnits.line-height
+ * @property {string} styleUnits.letter-spacing
+ * @property {string} styleUnits.word-spacing
+ * @property {number} linesPerParagraph lines per paragraph
+ * @property {number} wordsPerLine words per line
+ * @property {boolean} autoScan auto scan page for p tags
+ * @property {boolean} styleEnable enables style modifications
+ * @property {boolean} DOMEnable enables dom modifications
+ */
+
+
+const OptionsSchema = {
+	schema: {
+		style: {
+			'font-size': 16,
+			'line-height': 0,
+			'letter-spacing': 0,
+			'word-spacing': 0
+		},
+		styleUnits: {
+			'font-size': 'px',
+			'line-height': '',
+			'letter-spacing': 'px',
+			'word-spacing': 'px',
+		},
+
+		linesPerParagraph: 3,
+		wordsPerLine: 8,
+
+		autoScan: true,
+		styleEnable: true,
+		DOMEnable: true
+	},
+
+	/**
+	 * Enforces a schema for the extension's settings
+	 * @param {ExtensionSettings} settings Settings object
+	 */
+	verifySchema: function ({ style, styleUnits, ...pluginSettings }){
+		const { style: schemaStyle, styleUnits: schemaStyleUnits, ...schemaSettings } = this.schema
+
+		if(
+			Object.keys(style).length !== Object.keys(schemaStyle).length
+			|| Object.keys(styleUnits).length !== Object.keys(schemaStyleUnits).length
+			|| Object.keys(pluginSettings).length !== Object.keys(schemaSettings).length
+		) return false
+
+		return true
+	}
+}
+
+
+class DOMManipulator{
+	/**
+	 *
+	 * @param {ExtensionSettings} settings
+	 */
+	constructor(settings){
+		this.state = {
+			trackedElements: []
+		}
+
+		//TODO: idek, instead of throwing, maybe use defaults?
+		if(!OptionsSchema.verifySchema(settings))
+			throw Error ('Settings passed to DOMManipulator does not match schema')
+
+		this.settings = { ...settings }
+
+		parseAndAttachCSS(this.settings)
+	}
+
+	/**
+	 * Parses the settings and sets them as state
+	 * @param {object} settings Extension's settings set by user
+	 */
+
+
+	/**
+	 *
+	 * @param {DOMTree} newDOM
+	 * @param {DOMTree} oldDOM
+	 */
+	shouldUpdate(newState){
+		if(JSON.stringify(newState) === JSON.stringify(this.state)) return false
+		return true
+	}
+
+	/**
+	 * Updates the state of the DOMManipulator using the new tracking list
+	 * @param {object} newState updated state
+	 */
+	updateState(newState){
+		this.state = { ...this.state, ...newState }
+
+		this.reformatDOM()
+	}
+
+	/**
+	 * Formats paragraphs according to settings
+	 * @param {string} textContent Text content of paragraphs
+	 */
+	formatText(textContent){
+		const { wordsPerLine, linesPerParagraph } = this.settings
+
+		let wordCounter = 0
+		let lineCounter = 0
+
+		const modifiedParagraph = textContent.split(/\s/g).reduce((final, word) => {
+			if(wordCounter++ &lt; wordsPerLine) return final + word + ' '
+			else {
+				wordCounter = 0
+
+				if(lineCounter++ &lt; linesPerParagraph - 1) return final + '&lt;br>' + word + ' '
+
+				else {
+					lineCounter = 0
+					return final + '&lt;br>&lt;br>' + word + ' '
+				}
+
+			}
+		}, '')
+
+		return modifiedParagraph.trim()
+	}
+
+	/**
+	 * Uses the list of currently tracked &lt;p> tags and formats them according to settings
+	 */
+	reformatDOM(){
+		this.state.trackedElements.forEach(node => {
+			if(this.settings.DOMEnable) node.innerHTML = this.formatText(node.innerHTML)
+			if(this.settings.styleEnable) node.classList.add('ally-reads_improved_reading')
+		})
+	}
+
+	/**
+	 * Scans the DOM for &lt;p> tags and listens for changes to the dom. Uses MutationObserver to check for DOM mutations and an interval for older browsers.
+	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver|Mutation Observer - MDN}
+	 */
+	scanDOM(){
+		const newTrackingList = Array.from(document.getElementsByTagName('p'))
+		this.setState(newTrackingList)
+
+		if(window.MutationObserver){
+			const observer = new MutationObserver(mutationList => {
+				for(const mutation of mutationList){
+					//Updating the tracking list will get the latest result regardless of current index in the iteration loop.
+
+					if(mutation.type === 'childList') {
+						//REFACTORME: Could use some tree-based algorithm to search the DOM for added `p` nodes instead of scanning the whole DOM again
+
+						const newTrackingList = Array.from(document.getElementsByTagName('p'))
+						this.setState(newTrackingList)
+
+						break
+					}
+				}
+			})
+
+			observer.observe(document.querySelector('body'), { subtree: true, childList: true })
+		}
+		else {
+			setInterval(()=>{
+				const newTrackingList = Array.from(document.getElementsByTagName('p'))
+				this.setState(newTrackingList)
+			}, 5000)
+		}
+
+	}
+
+	/**
+	 * Defers and updates state
+	 * @param {array} newTrackingList A new list of &lt;p> tags
+	 */
+	setState(newTrackingList){
+		const newState = {
+			trackedElements: [...this.state.trackedElements, ...newTrackingList]
+		}
+
+		if(this.shouldUpdate(newState)) this.updateState(newState)
+	}
+}
+
+/**
+ * Starts the extension content_script after a timeout. The timeout here is used to avoid expensive wasted scans for browsers that support MutationObserver.
+ * @see {@link scanDOM}
+ */
+function start(){
+	setTimeout(async () => {
+
+		const options = await browser.storage.local.get()
+		const mod = new DOMManipulator(options)
+
+		if(options.autoScan) mod.scanDOM()
+
+	}, 3000)
+}
+
+
+/**
+ * Parses extension settings and creates a new stylesheet before attaching it to the DOM
+ * @param {ExtensionSettings} settings
+ */
+function parseAndAttachCSS(settings){
+	const { style, styleUnits } = settings
+
+	const newStylesheet = document.createElement('style')
+	newStylesheet.type = 'text/css'
+
+	newStylesheet.innerHTML = `.ally-reads_improved_reading{\n`
+
+	for(const key in style){
+		if(style[key] > 0) newStylesheet.innerHTML += `${key}: ${style[key]}${styleUnits[key]};\n`
+	}
+
+	newStylesheet.innerHTML += `}`
+
+	document.getElementsByTagName('head')[0].appendChild(newStylesheet)
+}
+
+
+window.addEventListener('load', ()=>{
+	start()
+})</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+  alpha@1.0.0
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+var list = [{"title":"DOMManipulator","link":"<a href=\"DOMManipulator.html\">DOMManipulator</a>"},{"title":"DOMManipulator#formatText","link":"<a href=\"DOMManipulator.html#formatText\">DOMManipulator &rtrif; formatText</a>"},{"title":"DOMManipulator#reformatDOM","link":"<a href=\"DOMManipulator.html#reformatDOM\">DOMManipulator &rtrif; reformatDOM</a>"},{"title":"DOMManipulator#scanDOM","link":"<a href=\"DOMManipulator.html#scanDOM\">DOMManipulator &rtrif; scanDOM</a>"},{"title":"DOMManipulator#setState","link":"<a href=\"DOMManipulator.html#setState\">DOMManipulator &rtrif; setState</a>"},{"title":"DOMManipulator#shouldUpdate","link":"<a href=\"DOMManipulator.html#shouldUpdate\">DOMManipulator &rtrif; shouldUpdate</a>"},{"title":"DOMManipulator#updateState","link":"<a href=\"DOMManipulator.html#updateState\">DOMManipulator &rtrif; updateState</a>"},{"title":"determineNodeType","link":"<a href=\"global.html#determineNodeType\">Global &rtrif; determineNodeType</a>"},{"title":"parseAndAttachCSS","link":"<a href=\"global.html#parseAndAttachCSS\">Global &rtrif; parseAndAttachCSS</a>"},{"title":"start","link":"<a href=\"global.html#start\">Global &rtrif; start</a>"},{"title":"updatePreview","link":"<a href=\"global.html#updatePreview\">Global &rtrif; updatePreview</a>"},{"title":"updateSelectorValue","link":"<a href=\"global.html#updateSelectorValue\">Global &rtrif; updateSelectorValue</a>"},{"title":"updateStorage","link":"<a href=\"global.html#updateStorage\">Global &rtrif; updateStorage</a>"},{"title":"updateValueDisplay","link":"<a href=\"global.html#updateValueDisplay\">Global &rtrif; updateValueDisplay</a>"},{"title":"updateVisualDefaults","link":"<a href=\"global.html#updateVisualDefaults\">Global &rtrif; updateVisualDefaults</a>"},{"title":"watchSelector","link":"<a href=\"global.html#watchSelector\">Global &rtrif; watchSelector</a>"}];
+setupSearch(list)
+</script>
+
+ 
+<script type="text/javascript" src="scripts/misc.js"></script>
+</body>
+</html>

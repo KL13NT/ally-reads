@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+      
+        <meta name="author" content="Nabil Tharwat">
+      
+        <meta name="description" content="Control what you read">
+      
+    
+    <title>Home</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/search.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.5/fuse.min.js"></script> -->
+    <script src="scripts/fuse.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme.css">
+    
+    
+    
+<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"/>
+                <path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z"/>
+            </g>
+        </symbol>
+    </defs>
+</svg>
+
+</head>
+<body>
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html"><div class="text">Ally Reads!</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://kl13nt.github.io/ally-reads/index.html' class='' id='' target=''>Ally Reads!</a></li><li><a href='https://github.com/KL13NT/ally-reads' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="DOMManipulator.html">DOMManipulator</a><ul class='methods'><li data-type='method'><a href="DOMManipulator.html#formatText">formatText</a></li><li data-type='method'><a href="DOMManipulator.html#reformatDOM">reformatDOM</a></li><li data-type='method'><a href="DOMManipulator.html#scanDOM">scanDOM</a></li><li data-type='method'><a href="DOMManipulator.html#setState">setState</a></li><li data-type='method'><a href="DOMManipulator.html#shouldUpdate">shouldUpdate</a></li><li data-type='method'><a href="DOMManipulator.html#updateState">updateState</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#determineNodeType">determineNodeType</a></li><li><a href="global.html#parseAndAttachCSS">parseAndAttachCSS</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#updatePreview">updatePreview</a></li><li><a href="global.html#updateSelectorValue">updateSelectorValue</a></li><li><a href="global.html#updateStorage">updateStorage</a></li><li><a href="global.html#updateValueDisplay">updateValueDisplay</a></li><li><a href="global.html#updateVisualDefaults">updateVisualDefaults</a></li><li><a href="global.html#watchSelector">watchSelector</a></li></ul></div>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>Ally Reads!</h1>
+<p>An accessibility suite giving you control over what you read.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#Developer-Notes">Developer Notes</a></li>
+<li><a href="#Motivation">Motivation</a></li>
+<li><a href="#How-to-use">How to use</a></li>
+<li><a href="#Contributing">Contributing</a></li>
+<li><a href="#Lifecycle">Lifecycle</a></li>
+<li><a href="#Upcoming-Features">Upcoming Features</a></li>
+<li><a href="#License">License</a></li>
+</ul>
+<h2>Developer Notes</h2>
+<p>Hello there! Reading this means you're interested in the source code for this extension, and lucky you, it's actually completely <em>open source</em>.</p>
+<p>I'm Nabil Tharwat, a UXE based in Egypt. Feel free to contact me about anything and everything related to this codebase. If you want to request a feature, shoot me an issue on this repo or contact me on any platform. Wondering where to find me? Head to <a href="https://iamnabil.me/about">iamnabil</a> and pick the platform you'd like. I'll let you read the documentation now. Have a lovely day!</p>
+<p>There's a DevLog/Timelapse video for the creation of this. It took me 1-2 full days. I'll link the video when it's uploaded.</p>
+<blockquote>
+<p>Currently Firefox only is supported</p>
+</blockquote>
+<h2>Motivation</h2>
+<p>You're probably wondering: why would anyone make this? The motivation for this was a tweet back in 2019 (I'm still searching for it) and it was about the struggle of people with disabilities and difficulties reading long blocks of text, especially when they're non-technical people. I had a brief discussion with the OP and turns out that no solution for this exists yet? So I decided to implement it myself. But yes, that was in 2019 and I couldn't get around to actually doing it but until now.</p>
+<h2>How to use</h2>
+<p>You can install it from the official extension stores or from its website. After installing you go to extension settings and configure it to your liking. There's a sample preview text for you to preview your changes. You can then rest assured it'll work on all paragraphs on all websites.</p>
+<h2>Contributing</h2>
+<p>I love contributing to OSS! And would love contributions to this repo. If you have a feature request, bug report, or have coded a new feature you can open an issue/PR/contact me anywhere and tell me all about it. If you have suggestions regarding cleaning up this codebase also feel free to tell me. I'd love to hear others' opinions on this.</p>
+<h2>Lifecycle</h2>
+<p>I develop features and fix bugs and push them to <code>develop</code>, when it's time to release completely I push to a version-named branch and <code>master</code>. Documentation is updated every time there's a new build.</p>
+<h2>Upcoming Features</h2>
+<ul>
+<li>
+<p><strong>Font selection list</strong>: To allow you to select a font for all paragraphs on all websites, or maybe even all elements. But to preserve the look and feel of websites there would be an option for the user to specify which behaviour they want.</p>
+</li>
+<li>
+<p><strong>Text foreground colour selection</strong>: Pick the colour for the text you read.</p>
+</li>
+<li>
+<p><strong>Text background colour selection</strong>: Pick the colour for the background of the text your read.</p>
+</li>
+<li>
+<p><strong>Instant word definitions</strong>: Click a word and get definitions for it right away!</p>
+</li>
+</ul>
+<h2>License</h2>
+<p>This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. Find the license <a href="../license">here</a></p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+  alpha@1.0.0
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+var list = [{"title":"DOMManipulator","link":"<a href=\"DOMManipulator.html\">DOMManipulator</a>"},{"title":"DOMManipulator#formatText","link":"<a href=\"DOMManipulator.html#formatText\">DOMManipulator &rtrif; formatText</a>"},{"title":"DOMManipulator#reformatDOM","link":"<a href=\"DOMManipulator.html#reformatDOM\">DOMManipulator &rtrif; reformatDOM</a>"},{"title":"DOMManipulator#scanDOM","link":"<a href=\"DOMManipulator.html#scanDOM\">DOMManipulator &rtrif; scanDOM</a>"},{"title":"DOMManipulator#setState","link":"<a href=\"DOMManipulator.html#setState\">DOMManipulator &rtrif; setState</a>"},{"title":"DOMManipulator#shouldUpdate","link":"<a href=\"DOMManipulator.html#shouldUpdate\">DOMManipulator &rtrif; shouldUpdate</a>"},{"title":"DOMManipulator#updateState","link":"<a href=\"DOMManipulator.html#updateState\">DOMManipulator &rtrif; updateState</a>"},{"title":"determineNodeType","link":"<a href=\"global.html#determineNodeType\">Global &rtrif; determineNodeType</a>"},{"title":"parseAndAttachCSS","link":"<a href=\"global.html#parseAndAttachCSS\">Global &rtrif; parseAndAttachCSS</a>"},{"title":"start","link":"<a href=\"global.html#start\">Global &rtrif; start</a>"},{"title":"updatePreview","link":"<a href=\"global.html#updatePreview\">Global &rtrif; updatePreview</a>"},{"title":"updateSelectorValue","link":"<a href=\"global.html#updateSelectorValue\">Global &rtrif; updateSelectorValue</a>"},{"title":"updateStorage","link":"<a href=\"global.html#updateStorage\">Global &rtrif; updateStorage</a>"},{"title":"updateValueDisplay","link":"<a href=\"global.html#updateValueDisplay\">Global &rtrif; updateValueDisplay</a>"},{"title":"updateVisualDefaults","link":"<a href=\"global.html#updateVisualDefaults\">Global &rtrif; updateVisualDefaults</a>"},{"title":"watchSelector","link":"<a href=\"global.html#watchSelector\">Global &rtrif; watchSelector</a>"}];
+setupSearch(list)
+</script>
+
+ 
+<script type="text/javascript" src="scripts/misc.js"></script>
+</body>
+</html>
