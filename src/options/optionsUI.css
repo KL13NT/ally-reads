@@ -3,13 +3,14 @@
 	display: flex;
 	flex-direction: column;
 	margin: 1rem auto;
+	padding: 0 1rem
 }
 
 .c-input{
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
-	padding: 0.7rem 1rem 0;
+	padding: 0.7rem 0 0;
 }
 
 .c-input label{
@@ -30,5 +31,8 @@
 
 .u-note{
 	font-size: 0.7rem;
-	padding: 0 1rem;
+}
+
+.u-full-width{
+	width: 100%;
 }

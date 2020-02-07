@@ -8,7 +8,7 @@ browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
 		},
 		styleUnits: {
 			'font-size': 'px',
-			'line-height': 'px',
+			'line-height': '',
 			'letter-spacing': 'px',
 			'word-spacing': 'px',
 		},

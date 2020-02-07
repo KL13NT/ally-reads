@@ -2,24 +2,28 @@ const selectors = document.querySelectorAll('.c-input--range')
 const checks = document.querySelectorAll('.c-input--check')
 const textSample = document.querySelector('#text-sample')
 /**
- *
- * @param {DOMNode} selector
- * @param {Storage} storage destructured storage data
+ * Updates selector values
+ * @param {HTMLElement} selector
+ * @param {object} storage destructured storage data
  */
-function setSelector(selector, { style, styleUnits, ...settings }){
+function updateSelectorValue(selector, { style, styleUnits, ...settings }){
 	if(determineNodeType(selector.children[1])) selector.children[1].checked = settings[selector.children[1].name]
 	selector.children[1].value = style[selector.children[1].name]
 }
 
+/**
+ * Sets defaults upon settings page load
+ * @param {object} storage
+ */
 function updateVisualDefaults(storage){
 	selectors.forEach(element => {
-		setSelector(element, storage)
+		updateSelectorValue(element, storage)
 		updateValueDisplay(element)
 		updatePreview(storage)
 	})
 
 	checks.forEach(element => {
-		setSelector(element, storage)
+		updateSelectorValue(element, storage)
 		updateValueDisplay(element)
 		updatePreview(storage)
 	})
@@ -27,12 +31,19 @@ function updateVisualDefaults(storage){
 
 /**
  * returns true if checkbox
- * @param {} node
+ * @param {HTMLElement} node
+ * @returns {boolean} indicating if type is checkbox
  */
 function determineNodeType(node){
+	//REFACTORME: perhaps directly use type instead?
 	return node.type === 'checkbox'
 }
 
+/**
+ * Updates StorageArea with new settings
+ * @async
+ * @param {HTMLElement} updatedSelector element which value has changed
+ */
 async function updateStorage(updatedSelector){
 	const selector = updatedSelector.children[1]
 	const { value, checked, name } = updatedSelector.children[1]
@@ -55,10 +66,24 @@ async function updateStorage(updatedSelector){
 	updatePreview(await browser.storage.local.get())
 }
 
-function updateValueDisplay(selector, e){
-	if(selector.children[2]) selector.children[2].textContent = `${selector.children[1].value}px`
+
+/**
+ * Updates the value textual display next to range selectors
+ * @param {HTMLElement} selector
+ */
+function updateValueDisplay(selector){
+	const [ , range, valueDisplay ] = selector.children
+	const { value, name } = range
+
+	browser.storage.local.get().then(({ styleUnits })=> {
+		if(selector.children[2]) valueDisplay.textContent = `${value}${styleUnits[name]}`
+	})
 }
 
+
+/**
+ * Watches selectors for changes
+ */
 function watchSelector(){
 	selectors.forEach(element => {
 		element.children[1].addEventListener('input', (e)=>{
@@ -73,10 +98,21 @@ function watchSelector(){
 	checks.forEach(element => {
 		element.children[1].addEventListener('change', async (e)=>{
 			updateStorage(element)
-			console.log(await browser.storage.local.get())
 		})
 	})
 }
+
+
+/**
+ * Updates sample preview text in reaction to settings changes
+ * @param {ExtensionSettings} settings
+ */
+function updatePreview({ style, styleUnits }){
+	for(const key in style){
+		if(style[key] > 0) textSample.style[key] = `${style[key]}${styleUnits[key]}`
+	}
+}
+
 
 
 window.addEventListener('load', async ()=>{
@@ -85,12 +121,3 @@ window.addEventListener('load', async ()=>{
 	updateVisualDefaults(settings)
 	watchSelector()
 })
-
-
-
-
-function updatePreview({ style, styleUnits }){
-	for(const key in style){
-		if(style[key] > 0) textSample.style[key] = `${style[key]}${styleUnits[key]}`
-	}
-}

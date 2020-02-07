@@ -1,0 +1,13 @@
+{
+
+	"source": {
+		"exclude": [ "./node_modules" ],
+		"includePatterns": "(\\.\\/src\\/.+\\.js)|(\\.\\/index\\.js)"
+	},
+	"sourceType": "module",
+  "templates": {
+    "logo": "./icons/icon.png",
+    "name": "Ally Reads",
+    "footerText": "Control what you read."
+  }
+}

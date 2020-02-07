@@ -1,3 +1,24 @@
+/**
+ * Extension settings custom schema
+ * @typedef {Object} ExtensionSettings
+ * @property {object} style defines style values
+ * @property {number} style.font-size
+ * @property {number} style.line-height
+ * @property {number} style.letter-spacing
+ * @property {number} style.word-spacing
+ * @property {object} styleUnits defines style units
+ * @property {string} styleUnits.font-size
+ * @property {string} styleUnits.line-height
+ * @property {string} styleUnits.letter-spacing
+ * @property {string} styleUnits.word-spacing
+ * @property {number} linesPerParagraph
+ * @property {number} wordsPerLine
+ * @property {boolean} autoScan auto scan page for p tags
+ * @property {boolean} styleEnable enables style modifications
+ * @property {boolean} DOMEnable enables dom modifications
+ */
+
+
 const OptionsSchema = {
 	schema: {
 		style: {
@@ -8,7 +29,7 @@ const OptionsSchema = {
 		},
 		styleUnits: {
 			'font-size': 'px',
-			'line-height': 'px',
+			'line-height': '',
 			'letter-spacing': 'px',
 			'word-spacing': 'px',
 		},
@@ -21,6 +42,10 @@ const OptionsSchema = {
 		DOMEnable: true
 	},
 
+	/**
+	 * Enforces a schema for the extension's settings
+	 * @param {ExtensionSettings} settings Settings object
+	 */
 	verifySchema: function ({ style, styleUnits, ...pluginSettings }){
 		const { style: schemaStyle, styleUnits: schemaStyleUnits, ...schemaSettings } = this.schema
 
@@ -36,6 +61,10 @@ const OptionsSchema = {
 
 
 class DOMManipulator{
+	/**
+	 *
+	 * @param {ExtensionSettings} settings
+	 */
 	constructor(settings){
 		this.state = {
 			trackedElements: []
@@ -74,12 +103,12 @@ class DOMManipulator{
 	}
 
 	/**
-	 * Formats according to settings
-	 * @param {DOMNode.TextContent} textContent Text content of paragraphs
+	 * Formats paragraphs according to settings
+	 * @param {string} textContent Text content of paragraphs
 	 */
-	formatParagraph(textContent){
+	formatText(textContent){
 		const { wordsPerLine, linesPerParagraph } = this.settings
-		// text content could be a paragraph
+
 		let wordCounter = 0
 		let lineCounter = 0
 
@@ -101,26 +130,35 @@ class DOMManipulator{
 		return modifiedParagraph.trim()
 	}
 
+	/**
+	 * Uses the list of currently tracked <p> tags and formats them according to settings
+	 */
 	reformatDOM(){
 		this.state.trackedElements.forEach(node => {
-			if(this.settings.DOMEnable) node.innerHTML = this.formatParagraph(node.innerHTML)
+			if(this.settings.DOMEnable) node.innerHTML = this.formatText(node.innerHTML)
 			if(this.settings.styleEnable) node.classList.add('ally-reads_improved_reading')
 		})
 	}
 
+	/**
+	 * Scans the DOM for <p> tags and listens for changes to the dom. Uses MutationObserver to check for DOM mutations and an interval for older browsers.
+	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver|Mutation Observer - MDN}
+	 */
 	scanDOM(){
 		const newTrackingList = Array.from(document.getElementsByTagName('p'))
 		this.setState(newTrackingList)
 
-		//REFACTORME: Might be a potential loss of performance here. The DOM may have 1 mutations and instead of capturing one, I capture two times.
 		if(window.MutationObserver){
 			const observer = new MutationObserver(mutationList => {
 				for(const mutation of mutationList){
 					//Updating the tracking list will get the latest result regardless of current index in the iteration loop.
+
 					if(mutation.type === 'childList') {
 						//REFACTORME: Could use some tree-based algorithm to search the DOM for added `p` nodes instead of scanning the whole DOM again
+
 						const newTrackingList = Array.from(document.getElementsByTagName('p'))
 						this.setState(newTrackingList)
+
 						break
 					}
 				}
@@ -138,7 +176,8 @@ class DOMManipulator{
 	}
 
 	/**
-	 * Defers and updates state in an immutable fashion. Makes sure state is only changed when needed
+	 * Defers and updates state
+	 * @param {array} newTrackingList A new list of <p> tags
 	 */
 	setState(newTrackingList){
 		const newState = {
@@ -149,8 +188,11 @@ class DOMManipulator{
 	}
 }
 
-
-window.addEventListener('load', ()=>{
+/**
+ * Starts the extension content_script after a timeout. The timeout here is used to avoid expensive wasted scans for browsers that support MutationObserver.
+ * @see {@link scanDOM}
+ */
+function start(){
 	setTimeout(async () => {
 
 		const options = await browser.storage.local.get()
@@ -158,27 +200,30 @@ window.addEventListener('load', ()=>{
 		if(options.autoScan) mod.scanDOM()
 
 	}, 3000)
-	console.log(`called constrcutor`)
+}
+
+window.addEventListener('load', ()=>{
+	start()
 })
 
 
-
+/**
+ * Parses extension settings and creates a new stylesheet before attaching it to the DOM
+ * @param {ExtensionSettings} settings
+ */
 function parseAndAttachCSS(settings){
-		const { style, styleUnits } = settings
-		//TODO: perhaps use a new Stylesheet node OR explicitly define properties for each paragraph.
-		//New stylesheet is prolly more performant
-		const newStylesheet = document.createElement('style')
-		newStylesheet.type = 'text/css'
+	const { style, styleUnits } = settings
 
-		newStylesheet.innerHTML = `.ally-reads_improved_reading{\n`
+	const newStylesheet = document.createElement('style')
+	newStylesheet.type = 'text/css'
 
-		for(const key in style){
-			if(style[key] > 0) newStylesheet.innerHTML += `${key}: ${style[key]}${styleUnits[key]};\n`
-		}
-		newStylesheet.innerHTML += `}`
+	newStylesheet.innerHTML = `.ally-reads_improved_reading{\n`
 
-		document.getElementsByTagName('head')[0].appendChild(newStylesheet)
-		// create utility classes and add them to elements on the fly
-		// newStylesheet add settings
-		// append
+	for(const key in style){
+		if(style[key] > 0) newStylesheet.innerHTML += `${key}: ${style[key]}${styleUnits[key]};\n`
+	}
+
+	newStylesheet.innerHTML += `}`
+
+	document.getElementsByTagName('head')[0].appendChild(newStylesheet)
 }

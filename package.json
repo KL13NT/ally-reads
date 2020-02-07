@@ -8,11 +8,14 @@
   "license": "gpl-3.0",
   "scripts": {
     "ext": "node \"./node_modules/web-ext/bin/web-ext\" run",
-    "lint": "eslint --ext .jsx --ext .js ./src --config .eslintrc.js",
-    "test": "jest --colors --expand --logHeapUsage --config jest.config.js"
+    "build": "node \"./node_modules/web-ext/bin/web-ext\" build",
+    "web-ext": "node \"./node_modules/web-ext/bin/web-ext\"",
+		"test": "jest --colors --expand --logHeapUsage --config jest.config.js",
+		"docs": "./node_modules/.bin/jsdoc -c ./jsdoc.json -r ./ -d docs"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
+    "jsdoc": "^3.6.3",
     "web-ext": "^4.0.0"
   }
 }
