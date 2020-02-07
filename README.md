@@ -2,12 +2,13 @@
 An accessibility suite giving you control over what you read.
 
 ## Table of Contents
-	- [Developer Notes](#Developer_Notes)
-	- [Motivation](Motivation)
-	- [How to use](How_to_use)
-	- [Contributing](Contributing)
-	- [Lifecycle](Lifecycle)
-	- [License](License)
+- [Developer Notes](#Developer-Notes)
+- [Motivation](#Motivation)
+- [How to use](#How-to-use)
+- [Contributing](#Contributing)
+- [Lifecycle](#Lifecycle)
+- [Upcoming Features](#Upcoming-Features)
+- [License](#License)
 
 ## Developer Notes
 Hello there! Reading this means you're interested in the source code for this extension, and lucky you, it's actually completely *open source*.
@@ -15,6 +16,8 @@ Hello there! Reading this means you're interested in the source code for this ex
 I'm Nabil Tharwat, a UXE based in Egypt. Feel free to contact me about anything and everything related to this codebase. If you want to request a feature, shoot me an issue on this repo or contact me on any platform. Wondering where to find me? Head to [iamnabil](https://iamnabil.me/about) and pick the platform you'd like. I'll let you read the documentation now. Have a lovely day!
 
 There's a DevLog/Timelapse video for the creation of this. It took me 1-2 full days. I'll link the video when it's uploaded.
+
+> Currently Firefox only is supported
 
 ## Motivation
 You're probably wondering: why would anyone make this? The motivation for this was a tweet back in 2019 (I'm still searching for it) and it was about the struggle of people with disabilities and difficulties reading long blocks of text, especially when they're non-technical people. I had a brief discussion with the OP and turns out that no solution for this exists yet? So I decided to implement it myself. But yes, that was in 2019 and I couldn't get around to actually doing it but until now.
@@ -26,7 +29,16 @@ You can install it from the official extension stores or from its website. After
 I love contributing to OSS! And would love contributions to this repo. If you have a feature request, bug report, or have coded a new feature you can open an issue/PR/contact me anywhere and tell me all about it. If you have suggestions regarding cleaning up this codebase also feel free to tell me. I'd love to hear others' opinions on this.
 
 ## Lifecycle
+I develop features and fix bugs and push them to `develop`, when it's time to release completely I push to a version-named branch and `master`. Documentation is updated every time there's a new build.
 
+## Upcoming Features
+- **Smarter word breaks**: You may notice that sometimes the end of sentences come on a new line instead of completing the current one, and other spacing-related bugs. These are caused by the way the extension handles words and spacing. Will be fixing it soon.
+
+- **Font selection list**: To allow you to select a font for all paragraphs on all websites, or maybe even all elements. But to preserve the look and feel of websites there would be an option for the user to specify which behaviour they want.
+
+- **Text foreground & background colour selection**: Colour what you read.
+
+- **Instant word definitions**: Click a word and get definitions for it right away!
 
 ## License
-This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. Find the license [here](./license)
+This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. Find the license [here](../license)

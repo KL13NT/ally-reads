@@ -11,8 +11,8 @@
  * @property {string} styleUnits.line-height
  * @property {string} styleUnits.letter-spacing
  * @property {string} styleUnits.word-spacing
- * @property {number} linesPerParagraph
- * @property {number} wordsPerLine
+ * @property {number} linesPerParagraph lines per paragraph
+ * @property {number} wordsPerLine words per line
  * @property {boolean} autoScan auto scan page for p tags
  * @property {boolean} styleEnable enables style modifications
  * @property {boolean} DOMEnable enables dom modifications
@@ -91,11 +91,14 @@ class DOMManipulator{
 	 * @param {DOMTree} oldDOM
 	 */
 	shouldUpdate(newState){
-		//TODO: grab all paragraph elements and compare them with the already tracked ones
 		if(JSON.stringify(newState) === JSON.stringify(this.state)) return false
 		return true
 	}
 
+	/**
+	 * Updates the state of the DOMManipulator using the new tracking list
+	 * @param {object} newState updated state
+	 */
 	updateState(newState){
 		this.state = { ...this.state, ...newState }
 
@@ -197,14 +200,11 @@ function start(){
 
 		const options = await browser.storage.local.get()
 		const mod = new DOMManipulator(options)
+
 		if(options.autoScan) mod.scanDOM()
 
 	}, 3000)
 }
-
-window.addEventListener('load', ()=>{
-	start()
-})
 
 
 /**
@@ -227,3 +227,8 @@ function parseAndAttachCSS(settings){
 
 	document.getElementsByTagName('head')[0].appendChild(newStylesheet)
 }
+
+
+window.addEventListener('load', ()=>{
+	start()
+})
