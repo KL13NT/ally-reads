@@ -5,9 +5,27 @@
 		"includePatterns": "(\\.\\/src\\/.+\\.js)|(\\.\\/index\\.js)"
 	},
 	"sourceType": "module",
-  "templates": {
-    "logo": "./icons/icon.png",
-    "name": "Ally Reads",
-    "footerText": "Control what you read."
+  "opts":{
+		"theme_opts": {
+			"title": "Ally Reads!",
+			"meta": [
+				"<meta name=\"author\" content=\"Nabil Tharwat\">",
+				"<meta name=\"description\" content=\"Control what you read\">"
+			],
+			"menu": [
+				{
+					"title": "Ally Reads!",
+					"link": "https://kl13nt.github.io/ally-reads/index.html"
+				},
+				{
+					"title": "Github",
+					"link": "https://github.com/KL13NT/ally-reads",
+					"target": "_blank"
+				}
+			],
+			"footer": "alpha@1.0.0"
+		},
+		"readme": "./README.md",
+		"template": "node_modules/clean-jsdoc-theme"
   }
 }

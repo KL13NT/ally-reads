@@ -795,6 +795,13 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
+clean-jsdoc-theme@^2.2.10:
+  version "2.2.10"
+  resolved "https://registry.yarnpkg.com/clean-jsdoc-theme/-/clean-jsdoc-theme-2.2.10.tgz#3811c737c6a6d314a5437230ce3b6039d8354d27"
+  integrity sha512-kE8mCHzOtpQKsbk7CepcMez2Fs8k8ovgotmUhrDgJzjytyuI5PExnSdOt6gDCM0h4PT3EdkQEXOUYx8MCu1xAQ==
+  dependencies:
+    jsdoc "^3.6.3"
+
 cli-boxes@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/cli-boxes/-/cli-boxes-2.2.0.tgz#538ecae8f9c6ca508e3c3c95b453fe93cb4c168d"

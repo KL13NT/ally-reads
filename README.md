@@ -2,11 +2,12 @@
 An accessibility suite giving you control over what you read.
 
 ## Table of Contents
-	- Developer Notes
-	- Motivation
-	- How to use
-	- Contributing
-	- License
+	- [Developer Notes](#Developer_Notes)
+	- [Motivation](Motivation)
+	- [How to use](How_to_use)
+	- [Contributing](Contributing)
+	- [Lifecycle](Lifecycle)
+	- [License](License)
 
 ## Developer Notes
 Hello there! Reading this means you're interested in the source code for this extension, and lucky you, it's actually completely *open source*.
@@ -23,6 +24,9 @@ You can install it from the official extension stores or from its website. After
 
 ## Contributing
 I love contributing to OSS! And would love contributions to this repo. If you have a feature request, bug report, or have coded a new feature you can open an issue/PR/contact me anywhere and tell me all about it. If you have suggestions regarding cleaning up this codebase also feel free to tell me. I'd love to hear others' opinions on this.
+
+## Lifecycle
+
 
 ## License
 This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. Find the license [here](./license)

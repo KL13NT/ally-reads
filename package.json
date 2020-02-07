@@ -10,10 +10,11 @@
     "ext": "node \"./node_modules/web-ext/bin/web-ext\" run",
     "build": "node \"./node_modules/web-ext/bin/web-ext\" build",
     "web-ext": "node \"./node_modules/web-ext/bin/web-ext\"",
-		"test": "jest --colors --expand --logHeapUsage --config jest.config.js",
-		"docs": "./node_modules/.bin/jsdoc -c ./jsdoc.json -r ./ -d docs"
+    "test": "jest --colors --expand --logHeapUsage --config jest.config.js",
+    "docs": "./node_modules/.bin/jsdoc -c ./jsdoc.json -r ./ -d docs"
   },
   "devDependencies": {
+    "clean-jsdoc-theme": "^2.2.10",
     "eslint": "^6.8.0",
     "jsdoc": "^3.6.3",
     "web-ext": "^4.0.0"
