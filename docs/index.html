@@ -74,14 +74,14 @@
     <section class="readme">
         <article><center>
 <p align="center">
-<p><img src="https://kl13nt.github.io/ally-reads/img/icon.png" alt="Logo"></p>
+<img align="center" alt="icon" src="https://kl13nt.github.io/ally-reads/img/icon.png">
 </p>
 </center>
 <h1>Ally Reads!</h1>
 <p>An accessibility suite giving you control over what you read.</p>
 <center>
 <p align="center">
-<p><img src="https://kl13nt.github.io/ally-reads/img/screenshot.PNG" alt="screenshot"></p>
+<img align="center" alt="screenshot" height="400px" src="https://kl13nt.github.io/ally-reads/img/screenshot.PNG">
 </p>
 </center>
 <h2>Table of Contents</h2>
@@ -138,7 +138,12 @@
 <p>Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in <code>content_script.js</code>.</p>
 <h2>Known Bugs</h2>
 <ul>
-<li><strong>Broken links</strong> <em>#003</em> <em>Fixed</em>: The extension uses a very basic approach to replace <code>&lt;p&gt;</code> tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.</li>
+<li>
+<p><strong>Social media and text modifications</strong> <em>#004</em>: Text modifications such as writing a facebook post or a tweet will cause the extension to query the DOM on every few key strokes. This is because of the behaviour of the MutationObserver API. A possible fix for it could be to detect keyboard events and/or check the type of element the user is updating (i.e. text area, input field, etc.)</p>
+</li>
+<li>
+<p><strong>Broken links</strong> <em>#003</em> <em>Fixed</em>: The extension uses a very basic approach to replace <code>&lt;p&gt;</code> tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.</p>
+</li>
 </ul>
 <h2>Change Log</h2>
 <ul>
