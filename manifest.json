@@ -2,13 +2,13 @@
   "manifest_version": 2,
   "name": "Ally Reads!",
   "description": "An accessibility suite giving you control over what you read.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "icons": {
     "64": "./src/icons/icon.png"
 	},
 	"applications": {
 		"gecko": {
-			"update_url": "https://example.com/updates.json"
+			"update_url": "https://kl13nt.github.io/ally-reads/update_manifest.json"
 		}
 	},
 	"permissions": [

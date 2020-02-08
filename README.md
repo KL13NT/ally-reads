@@ -1,5 +1,17 @@
+<center>
+
+![Logo](./src/icons/icon.png)
+
+</center>
+
 # Ally Reads!
 An accessibility suite giving you control over what you read.
+
+<center>
+
+![screenshot](./docs/img/screenshot.png)
+
+</center>
 
 ## Table of Contents
 - [Developer Notes](#Developer-Notes)

@@ -1,6 +1,6 @@
 {
   "name": "ally-reads",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An accessibility suite giving you control over what you read.",
   "main": "index.js",
   "repository": "git@github.com:KL13NT/ally-reads.git",
@@ -8,7 +8,7 @@
   "license": "GPL-3.0-only",
   "scripts": {
     "ext": "node \"./node_modules/web-ext/bin/web-ext\" run",
-    "build": "node \"./node_modules/web-ext/bin/web-ext\" build",
+    "build": " yarn web-ext build -a ./docs/web-ext-artifacts --overwrite-dest",
     "web-ext": "node \"./node_modules/web-ext/bin/web-ext\"",
     "test": "jest --colors --expand --logHeapUsage --config jest.config.js",
     "docs": "./node_modules/.bin/jsdoc -c ./jsdoc.json -r ./ -d docs"
