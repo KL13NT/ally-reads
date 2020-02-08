@@ -1,0 +1,31 @@
+{
+
+	"source": {
+		"exclude": [ "./node_modules" ],
+		"includePatterns": "(\\.\\/src\\/.+\\.js)|(\\.\\/index\\.js)"
+	},
+	"sourceType": "module",
+  "opts":{
+		"theme_opts": {
+			"title": "Ally Reads!",
+			"meta": [
+				"<meta name=\"author\" content=\"Nabil Tharwat\">",
+				"<meta name=\"description\" content=\"Control what you read\">"
+			],
+			"menu": [
+				{
+					"title": "Download Ally Read!",
+					"link": "/web-ext-artifacts/allyreads-1.0.3-an+fx.xpi"
+				},
+				{
+					"title": "Github",
+					"link": "https://github.com/KL13NT/ally-reads",
+					"target": "_blank"
+				}
+			],
+			"footer": "alpha@1.0.0"
+		},
+		"readme": "./README.md",
+		"template": "node_modules/clean-jsdoc-theme"
+  }
+}
