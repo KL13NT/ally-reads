@@ -30,6 +30,8 @@ You can install it from the official extension stores or from its website. After
 ## Contributing
 I love contributing to OSS! And would love contributions to this repo. If you have a feature request, bug report, or have coded a new feature you can open an issue/PR/contact me anywhere and tell me all about it. If you have suggestions regarding cleaning up this codebase also feel free to tell me. I'd love to hear others' opinions on this.
 
+Please follow the formatting rules in the eslint config file. I'll be writing tests soon.
+
 ## Lifecycle
 I develop features and fix bugs and push them to `develop`, when it's time to release completely I push to a version-named branch and `master`. Documentation is updated every time there's a new build.
 
