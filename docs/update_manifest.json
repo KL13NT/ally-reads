@@ -1,0 +1,20 @@
+{
+	"addons": {
+		"{c15e9637-cabf-4b8b-8177-d10c251cf75c}": {
+			"updates": [
+        {
+          "version": "1.0.0",
+          "update_link": "https://kl13nt.github.io/ally-reads/web-ext-artifacts/allyreads-1.0.0-an+fx.xpi"
+        },
+        {
+          "version": "1.0.3",
+          "update_link": "https://kl13nt.github.io/ally-reads/web-ext-artifacts/allyreads-1.0.3-an+fx.xpi"
+        },
+        {
+          "version": "1.0.4",
+          "update_link": "https://kl13nt.github.io/ally-reads/web-ext-artifacts/allyreads-1.0.4-an+fx.xpi"
+        }
+      ]
+		}
+	}
+}
