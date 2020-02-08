@@ -44,7 +44,9 @@ I develop features and fix bugs and push them to `develop`, when it's time to re
 - **Instant word definitions**: Click a word and get definitions for it right away!
 
 ## Known Bugs
-- Navigating different pages in the same tab causes the e
+- **Navigation**: Navigating different pages in the same tab causes the extension to go into an infinite loop.
+
+- **Deferring Algorithm**: The extension detects its own DOM mutations and react to them. Need a better deferring algorithm.
 
 ## License
 This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. Find the license [here](../license)

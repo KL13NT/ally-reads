@@ -118,6 +118,8 @@ function updatePreview({ style, styleUnits }){
 window.addEventListener('load', async ()=>{
 	const settings = await browser.storage.local.get()
 
-	updateVisualDefaults(settings)
-	watchSelector()
+	if(typeof settings.style === 'object' && typeof settings.styleEnable === 'boolean'){
+		updateVisualDefaults(settings)
+		watchSelector()
+	}
 })

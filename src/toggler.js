@@ -1,9 +1,14 @@
 function toggle(){
-	console.log(`toggling!`)
-	browser.storage.local.get().then(settings=> {
-		browser.storage.local.set({
-			...settings, !DOMEnable, !styleEnable
-		})
+
+	browser.storage.local.get().then(({ DOMEnable, styleEnable, autoScan, ...settings }) => {
+		const newStorage = {
+			...settings,
+			styleEnable: !styleEnable,
+			DOMEnable: !DOMEnable,
+			autoScan: !autoScan
+		}
+
+		browser.storage.local.set(newStorage)
 	})
 }
 

@@ -18,6 +18,12 @@
  * @property {boolean} DOMEnable enables dom modifications
  */
 
+/**
+ * Extension settings custom schema
+ * @typedef {array} MutationList
+ * @property {MutationRecord} MutationRecord defines style values
+ */
+
 
 const OptionsSchema = {
 	schema: {
@@ -50,19 +56,24 @@ const OptionsSchema = {
 		const { style: schemaStyle, styleUnits: schemaStyleUnits, ...schemaSettings } = this.schema
 
 		if(
-			Object.keys(style).length !== Object.keys(schemaStyle).length
-			|| Object.keys(styleUnits).length !== Object.keys(schemaStyleUnits).length
-			|| Object.keys(pluginSettings).length !== Object.keys(schemaSettings).length
+			(style && styleUnits && pluginSettings) && (
+				Object.keys(style).length !== Object.keys(schemaStyle).length
+				|| Object.keys(styleUnits).length !== Object.keys(schemaStyleUnits).length
+				|| Object.keys(pluginSettings).length !== Object.keys(schemaSettings).length
+			)
 		) return false
 
 		return true
 	}
 }
 
-
+/**
+ * @property {boolean} observationEnabled
+ * @property {ExtensionSettings} settings
+ * @property {ExtensionSettings} settings
+ */
 class DOMManipulator{
 	/**
-	 *
 	 * @param {ExtensionSettings} settings
 	 */
 	constructor(settings){
@@ -70,20 +81,16 @@ class DOMManipulator{
 			trackedElements: []
 		}
 
-		//TODO: idek, instead of throwing, maybe use defaults?
 		if(!OptionsSchema.verifySchema(settings))
 			throw Error ('Settings passed to DOMManipulator does not match schema')
 
 		this.settings = { ...settings }
+		this.observationEnabled = true
+		this.currentURL = null
+
 
 		parseAndAttachCSS(this.settings)
 	}
-
-	/**
-	 * Parses the settings and sets them as state
-	 * @param {object} settings Extension's settings set by user
-	 */
-
 
 	/**
 	 *
@@ -95,15 +102,6 @@ class DOMManipulator{
 		return true
 	}
 
-	/**
-	 * Updates the state of the DOMManipulator using the new tracking list
-	 * @param {object} newState updated state
-	 */
-	updateState(newState){
-		this.state = { ...this.state, ...newState }
-
-		this.reformatDOM()
-	}
 
 	/**
 	 * Formats paragraphs according to settings
@@ -120,11 +118,11 @@ class DOMManipulator{
 			else {
 				wordCounter = 0
 
-				if(lineCounter++ < linesPerParagraph - 1) return final + '<br>' + word + ' '
+				if(lineCounter++ < linesPerParagraph - 1) return final + '\r\n' + word + ' '
 
 				else {
 					lineCounter = 0
-					return final + '<br><br>' + word + ' '
+					return final + '\r\n\r\n' + word + ' '
 				}
 
 			}
@@ -138,9 +136,62 @@ class DOMManipulator{
 	 */
 	reformatDOM(){
 		this.state.trackedElements.forEach(node => {
-			if(this.settings.DOMEnable) node.innerHTML = this.formatText(node.innerHTML)
+			if(this.settings.DOMEnable) node.textContent = this.formatText(node.textContent)
 			if(this.settings.styleEnable) node.classList.add('ally-reads_improved_reading')
 		})
+
+		setTimeout(this.toggleObservation, 1000)
+	}
+
+	//BUG: the observer catches modifications made by the extension itself.
+	/**
+	 * Observation handler
+	 * @param {[MutationRecord]} mutationList
+	 */
+
+	observe(mutationList){
+		if(this.observationEnabled){
+			this.toggleObservation()
+
+			setTimeout(()=>{
+				for(const mutation of mutationList){
+					//Updating the tracking list will get the latest result regardless of current index in the iteration loop.
+
+					if(mutation.type === 'childList') {
+						//REFACTORME: Could use some tree-based algorithm to search the DOM for added `p` nodes instead of scanning the whole DOM again
+
+						this.setState({
+							...this.state,
+							trackedElements: this.getNewTrackingList()
+						})
+
+						break
+					}
+				}
+			}, 2000) // scans the dom after 2 second of detecting mutation. This is to avoid wasted scans.
+
+		}
+	}
+
+	/**
+	 * Gets the new tracking list based on whether it's the same page
+	 * @returns {[HTMLElement]} array of elements
+	 */
+
+	getNewTrackingList(){
+		if(window.location.href === this.currentURL){
+			return Array
+				.from(document.querySelectorAll('p, a, i'))
+				.slice(this.state.trackedElements.length)
+		}
+		else return Array.from(document.querySelectorAll('p, a, li'))
+	}
+
+	/**
+	 * Toggles the observation handler
+	 */
+	toggleObservation(){
+		this.observationEnabled = !this.observationEnabled
 	}
 
 	/**
@@ -148,31 +199,23 @@ class DOMManipulator{
 	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver|Mutation Observer - MDN}
 	 */
 	scanDOM(){
-		const newTrackingList = Array.from(document.getElementsByTagName('p'))
-		this.setState(newTrackingList)
+		const newTrackingList = this.getNewTrackingList()
+		this.setState({...this.state, trackedElements: newTrackingList})
 
 		if(window.MutationObserver){
-			const observer = new MutationObserver(mutationList => {
-				for(const mutation of mutationList){
-					//Updating the tracking list will get the latest result regardless of current index in the iteration loop.
-
-					if(mutation.type === 'childList') {
-						//REFACTORME: Could use some tree-based algorithm to search the DOM for added `p` nodes instead of scanning the whole DOM again
-
-						const newTrackingList = Array.from(document.getElementsByTagName('p'))
-						this.setState(newTrackingList)
-
-						break
-					}
-				}
-			})
-
+			// calling using observe.call instead of direct to avoid setting MutationObserver as `this` for the handler.
+			const observer = new MutationObserver(mutationList => this.observe.call(this, mutationList))
 			observer.observe(document.querySelector('body'), { subtree: true, childList: true })
+
 		}
 		else {
 			setInterval(()=>{
-				const newTrackingList = Array.from(document.getElementsByTagName('p'))
-				this.setState(newTrackingList)
+
+				this.setState({
+					...this.state,
+					trackedElements: this.getNewTrackingList()
+				})
+
 			}, 5000)
 		}
 
@@ -182,12 +225,11 @@ class DOMManipulator{
 	 * Defers and updates state
 	 * @param {array} newTrackingList A new list of <p> tags
 	 */
-	setState(newTrackingList){
-		const newState = {
-			trackedElements: [...this.state.trackedElements, ...newTrackingList]
+	setState(nextState){
+		if(this.shouldUpdate(nextState)){
+			this.state = { ...nextState }
+			this.reformatDOM()
 		}
-
-		if(this.shouldUpdate(newState)) this.updateState(newState)
 	}
 }
 
@@ -220,7 +262,7 @@ function parseAndAttachCSS(settings){
 	newStylesheet.innerHTML = `.ally-reads_improved_reading{\n`
 
 	for(const key in style){
-		if(style[key] > 0) newStylesheet.innerHTML += `${key}: ${style[key]}${styleUnits[key]};\n`
+		if(style[key] > 0) newStylesheet.innerHTML += `${key}: ${style[key]}${styleUnits[key]} !important;\n`
 	}
 
 	newStylesheet.innerHTML += `}`
