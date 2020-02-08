@@ -1,6 +1,6 @@
 <center>
 
-![Logo](./src/icons/icon.png)
+![Logo](https://kl13nt.github.io/ally-reads/img/icon.png)
 
 </center>
 
@@ -9,7 +9,7 @@ An accessibility suite giving you control over what you read.
 
 <center>
 
-![screenshot](./docs/img/screenshot.png)
+![screenshot](https://kl13nt.github.io/ally-reads/img/screenshot.PNG)
 
 </center>
 
