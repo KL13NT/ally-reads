@@ -1,3 +1,5 @@
+/* eslint-env browser, webextensions */
+
 /**
  * Extension settings custom schema
  * @typedef {Object} ExtensionSettings
@@ -37,7 +39,7 @@ const OptionsSchema = {
 			'font-size': 'px',
 			'line-height': '',
 			'letter-spacing': 'px',
-			'word-spacing': 'px',
+			'word-spacing': 'px'
 		},
 
 		linesPerParagraph: 3,
@@ -55,15 +57,18 @@ const OptionsSchema = {
 	verifySchema: function ({ style, styleUnits, ...pluginSettings }){
 		const { style: schemaStyle, styleUnits: schemaStyleUnits, ...schemaSettings } = this.schema
 
-		if(
-			(style && styleUnits && pluginSettings) && (
+		try{
+			if(
 				Object.keys(style).length !== Object.keys(schemaStyle).length
 				|| Object.keys(styleUnits).length !== Object.keys(schemaStyleUnits).length
 				|| Object.keys(pluginSettings).length !== Object.keys(schemaSettings).length
-			)
-		) return false
+			) return false
 
-		return true
+			return true
+		}
+		catch(err){
+			return false
+		}
 	}
 }
 
@@ -76,7 +81,7 @@ class DOMManipulator{
 	/**
 	 * @param {ExtensionSettings} settings
 	 */
-	constructor(settings){
+	constructor (settings){
 		this.state = {
 			trackedElements: []
 		}
@@ -97,7 +102,7 @@ class DOMManipulator{
 	 * @param {DOMTree} newDOM
 	 * @param {DOMTree} oldDOM
 	 */
-	shouldUpdate(newState){
+	shouldUpdate (newState){
 		if(JSON.stringify(newState) === JSON.stringify(this.state)) return false
 		return true
 	}
@@ -107,21 +112,22 @@ class DOMManipulator{
 	 * Formats paragraphs according to settings
 	 * @param {string} textContent Text content of paragraphs
 	 */
-	formatText(textContent){
+	formatText (textContent){
+		//TODO: use an HTML parser to parse the DOM tree properly and replace inner text instead of inner children as a whole.
 		const { wordsPerLine, linesPerParagraph } = this.settings
 
 		let wordCounter = 0
-		let lineCounter = 0
+		let lineCounter = 1
 
 		const modifiedParagraph = textContent.split(/\s/g).reduce((final, word) => {
 			if(wordCounter++ < wordsPerLine) return final + word + ' '
 			else {
-				wordCounter = 0
+				wordCounter = 1
 
-				if(lineCounter++ < linesPerParagraph - 1) return final + '\r\n' + word + ' '
+				if(lineCounter++ < linesPerParagraph) return final + '\r\n' + word + ' '
 
 				else {
-					lineCounter = 0
+					lineCounter = 1
 					return final + '\r\n\r\n' + word + ' '
 				}
 
@@ -134,7 +140,7 @@ class DOMManipulator{
 	/**
 	 * Uses the list of currently tracked <p> tags and formats them according to settings
 	 */
-	reformatDOM(){
+	reformatDOM (){
 		this.state.trackedElements.forEach(node => {
 			if(this.settings.DOMEnable) node.textContent = this.formatText(node.textContent)
 			if(this.settings.styleEnable) node.classList.add('ally-reads_improved_reading')
@@ -149,21 +155,22 @@ class DOMManipulator{
 	 * @param {[MutationRecord]} mutationList
 	 */
 
-	observe(mutationList){
+	observe (mutationList){
 		if(this.observationEnabled){
 			this.toggleObservation()
 
-			setTimeout(()=>{
+			setTimeout(() => {
 				for(const mutation of mutationList){
 					//Updating the tracking list will get the latest result regardless of current index in the iteration loop.
 
 					if(mutation.type === 'childList') {
-						//REFACTORME: Could use some tree-based algorithm to search the DOM for added `p` nodes instead of scanning the whole DOM again
 
 						this.setState({
 							...this.state,
 							trackedElements: this.getNewTrackingList()
 						})
+
+						this.reformatDOM()
 
 						break
 					}
@@ -178,19 +185,19 @@ class DOMManipulator{
 	 * @returns {[HTMLElement]} array of elements
 	 */
 
-	getNewTrackingList(){
+	getNewTrackingList (){
 		if(window.location.href === this.currentURL){
 			return Array
-				.from(document.querySelectorAll('p, a, i'))
+				.from(document.querySelectorAll('p'))
 				.slice(this.state.trackedElements.length)
 		}
-		else return Array.from(document.querySelectorAll('p, a, li'))
+		else return Array.from(document.querySelectorAll('p'))
 	}
 
 	/**
 	 * Toggles the observation handler
 	 */
-	toggleObservation(){
+	toggleObservation (){
 		this.observationEnabled = !this.observationEnabled
 	}
 
@@ -198,9 +205,10 @@ class DOMManipulator{
 	 * Scans the DOM for <p> tags and listens for changes to the dom. Uses MutationObserver to check for DOM mutations and an interval for older browsers.
 	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver|Mutation Observer - MDN}
 	 */
-	scanDOM(){
+	scanDOM (){
 		const newTrackingList = this.getNewTrackingList()
-		this.setState({...this.state, trackedElements: newTrackingList})
+		this.setState({ ...this.state, trackedElements: newTrackingList })
+		this.reformatDOM()
 
 		if(window.MutationObserver){
 			// calling using observe.call instead of direct to avoid setting MutationObserver as `this` for the handler.
@@ -209,12 +217,13 @@ class DOMManipulator{
 
 		}
 		else {
-			setInterval(()=>{
+			setInterval(() => {
 
 				this.setState({
 					...this.state,
 					trackedElements: this.getNewTrackingList()
 				})
+				this.reformatDOM()
 
 			}, 5000)
 		}
@@ -225,10 +234,9 @@ class DOMManipulator{
 	 * Defers and updates state
 	 * @param {array} newTrackingList A new list of <p> tags
 	 */
-	setState(nextState){
+	setState (nextState){
 		if(this.shouldUpdate(nextState)){
 			this.state = { ...nextState }
-			this.reformatDOM()
 		}
 	}
 }
@@ -237,7 +245,7 @@ class DOMManipulator{
  * Starts the extension content_script after a timeout. The timeout here is used to avoid expensive wasted scans for browsers that support MutationObserver.
  * @see {@link scanDOM}
  */
-function start(){
+function start (){
 	setTimeout(async () => {
 
 		const options = await browser.storage.local.get()
@@ -253,24 +261,27 @@ function start(){
  * Parses extension settings and creates a new stylesheet before attaching it to the DOM
  * @param {ExtensionSettings} settings
  */
-function parseAndAttachCSS(settings){
+function parseAndAttachCSS (settings){
 	const { style, styleUnits } = settings
 
 	const newStylesheet = document.createElement('style')
 	newStylesheet.type = 'text/css'
 
-	newStylesheet.innerHTML = `.ally-reads_improved_reading{\n`
+	newStylesheet.innerHTML = '.ally-reads_improved_reading{\n'
 
 	for(const key in style){
 		if(style[key] > 0) newStylesheet.innerHTML += `${key}: ${style[key]}${styleUnits[key]} !important;\n`
 	}
 
-	newStylesheet.innerHTML += `}`
+	newStylesheet.innerHTML += '}'
 
 	document.getElementsByTagName('head')[0].appendChild(newStylesheet)
 }
 
 
-window.addEventListener('load', ()=>{
+window.addEventListener('load', () => {
 	start()
 })
+
+//TESTING: uncomment this line when testing
+// module.exports = { DOMManipulator, OptionsSchema, parseAndAttachCSS }

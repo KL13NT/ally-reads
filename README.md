@@ -8,6 +8,7 @@ An accessibility suite giving you control over what you read.
 - [Contributing](#Contributing)
 - [Lifecycle](#Lifecycle)
 - [Upcoming Features](#Upcoming-Features)
+- [Testing](#Testing)
 - [Known Bugs](#Known-Bugs)
 - [Change Log](#Change-Log)
 - [License](#License)
@@ -44,12 +45,17 @@ I develop features and fix bugs and push them to `develop`, when it's time to re
 
 - **Instant word definitions**: Click a word and get definitions for it right away!
 
-## Known Bugs
-- **Navigation** *[#001]* *[Fixed]*: Navigating different pages in the same tab causes the extension to go into an infinite loop.
+## Testing
+Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in `content_script.js`.
 
-- **Deferring Algorithm** *[#001]* *[Fixed]*: The extension detects its own DOM mutations and react to them. Need a better deferring algorithm.
+## Known Bugs
+- **Broken links**: The extension uses a very basic approach to replace `<p>` tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.
 
 ## Change Log
+- **v1.0.2**
+	- Implemented unit tests
+	- Bug fixes
+
 - **v1.0.1**
 	- Bug fixes:
 

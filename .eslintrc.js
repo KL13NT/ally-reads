@@ -30,7 +30,7 @@ module.exports = {
 		],
 		'quotes': [
 			'error',
-			'backtick'
+			'single'
 		],
 		'semi': [
 			'error',
@@ -38,7 +38,7 @@ module.exports = {
 		],
 		'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 		'no-unused-vars': [
-			'error', 
+			'error',
 			{
 				'varsIgnorePattern': 'Fragment'
 			}
