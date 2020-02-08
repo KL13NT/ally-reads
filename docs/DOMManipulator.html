@@ -48,7 +48,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html"><div class="text">Ally Reads!</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://kl13nt.github.io/ally-reads/index.html' class='' id='' target=''>Ally Reads!</a></li><li><a href='https://github.com/KL13NT/ally-reads' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="DOMManipulator.html">DOMManipulator</a><ul class='methods'><li data-type='method'><a href="DOMManipulator.html#formatText">formatText</a></li><li data-type='method'><a href="DOMManipulator.html#reformatDOM">reformatDOM</a></li><li data-type='method'><a href="DOMManipulator.html#scanDOM">scanDOM</a></li><li data-type='method'><a href="DOMManipulator.html#setState">setState</a></li><li data-type='method'><a href="DOMManipulator.html#shouldUpdate">shouldUpdate</a></li><li data-type='method'><a href="DOMManipulator.html#updateState">updateState</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#determineNodeType">determineNodeType</a></li><li><a href="global.html#parseAndAttachCSS">parseAndAttachCSS</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#updatePreview">updatePreview</a></li><li><a href="global.html#updateSelectorValue">updateSelectorValue</a></li><li><a href="global.html#updateStorage">updateStorage</a></li><li><a href="global.html#updateValueDisplay">updateValueDisplay</a></li><li><a href="global.html#updateVisualDefaults">updateVisualDefaults</a></li><li><a href="global.html#watchSelector">watchSelector</a></li></ul></div>
+    <h2><a href="index.html"><div class="text">Ally Reads!</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://kl13nt.github.io/ally-reads/index.html' class='' id='' target=''>Ally Reads!</a></li><li><a href='https://github.com/KL13NT/ally-reads' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="DOMManipulator.html">DOMManipulator</a><ul class='methods'><li data-type='method'><a href="DOMManipulator.html#formatNode">formatNode</a></li><li data-type='method'><a href="DOMManipulator.html#getNewTrackingList">getNewTrackingList</a></li><li data-type='method'><a href="DOMManipulator.html#observe">observe</a></li><li data-type='method'><a href="DOMManipulator.html#reformatDOM">reformatDOM</a></li><li data-type='method'><a href="DOMManipulator.html#scanDOM">scanDOM</a></li><li data-type='method'><a href="DOMManipulator.html#setState">setState</a></li><li data-type='method'><a href="DOMManipulator.html#shouldUpdate">shouldUpdate</a></li><li data-type='method'><a href="DOMManipulator.html#toggleObservation">toggleObservation</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#determineNodeType">determineNodeType</a></li><li><a href="global.html#parseAndAttachCSS">parseAndAttachCSS</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#updatePreview">updatePreview</a></li><li><a href="global.html#updateSelectorValue">updateSelectorValue</a></li><li><a href="global.html#updateStorage">updateStorage</a></li><li><a href="global.html#updateValueDisplay">updateValueDisplay</a></li><li><a href="global.html#updateVisualDefaults">updateVisualDefaults</a></li><li><a href="global.html#watchSelector">watchSelector</a></li></ul></div>
 </nav>
 
 <div id="main">
@@ -154,6 +154,104 @@
 
 
 
+    <h5 class="subsection-title">Properties</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>observationEnabled</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ExtensionSettings">ExtensionSettings</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#ExtensionSettings">ExtensionSettings</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
 <dl class="details">
 
     
@@ -184,7 +282,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line68">line 68</a>
+                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line84">line 84</a>
             </li></ul></dd>
         </div>
     
@@ -234,7 +332,7 @@
 
     
 
-    <h4 class="name" id="formatText"><span class="type-signature"></span>formatText<span class="signature">(textContent)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="formatNode"><span class="type-signature"></span>formatNode<span class="signature">(node)</span><span class="type-signature"></span></h4>
 
     
 
@@ -278,13 +376,13 @@
 
         <tr>
             
-                <td class="name"><code>textContent</code></td>
+                <td class="name"><code>node</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">HTMLElement</span>
 
 
             
@@ -337,7 +435,251 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line112">line 112</a>
+                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line116">line 116</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getNewTrackingList"><span class="type-signature"></span>getNewTrackingList<span class="signature">()</span><span class="type-signature"> &rarr; {array}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Gets the new tracking list based on whether it's the same page
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line196">line 196</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="method-member-container mt-20">
+<strong>Returns:</strong>
+
+        
+<div class="param-desc">
+    array of HTMLElement
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">array</span>
+
+
+    </dd>
+</dl>
+
+     
+</div>
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="observe"><span class="type-signature"></span>observe<span class="signature">(mutationList)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Observation handler
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
+        <strong>Parameters:</strong>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mutationList</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array of MutationRecord's</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line164">line 164</a>
             </li></ul></dd>
         </div>
     
@@ -421,7 +763,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line139">line 139</a>
+                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line149">line 149</a>
             </li></ul></dd>
         </div>
     
@@ -505,7 +847,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line150">line 150</a>
+                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line216">line 216</a>
             </li></ul></dd>
         </div>
     
@@ -649,7 +991,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line185">line 185</a>
+                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line245">line 245</a>
             </li></ul></dd>
         </div>
     
@@ -803,7 +1145,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line93">line 93</a>
+                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line106">line 106</a>
             </li></ul></dd>
         </div>
     
@@ -835,14 +1177,14 @@
 
     
 
-    <h4 class="name" id="updateState"><span class="type-signature"></span>updateState<span class="signature">(newState)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="toggleObservation"><span class="type-signature"></span>toggleObservation<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Updates the state of the DOMManipulator using the new tracking list
+    Toggles the observation handler
 </div>
 
 
@@ -852,57 +1194,6 @@
 
 
 
-
-    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
-        <strong>Parameters:</strong>
-        
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>newState</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">updated state</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
 
 
 
@@ -938,7 +1229,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line102">line 102</a>
+                <a href="content_script.js.html">content_script.js</a>, <a href="content_script.js.html#line208">line 208</a>
             </li></ul></dd>
         </div>
     
@@ -989,7 +1280,7 @@
 <script>prettyPrint();</script>
 <script src="scripts/linenumber.js"></script>
 <script>
-var list = [{"title":"DOMManipulator","link":"<a href=\"DOMManipulator.html\">DOMManipulator</a>"},{"title":"DOMManipulator#formatText","link":"<a href=\"DOMManipulator.html#formatText\">DOMManipulator &rtrif; formatText</a>"},{"title":"DOMManipulator#reformatDOM","link":"<a href=\"DOMManipulator.html#reformatDOM\">DOMManipulator &rtrif; reformatDOM</a>"},{"title":"DOMManipulator#scanDOM","link":"<a href=\"DOMManipulator.html#scanDOM\">DOMManipulator &rtrif; scanDOM</a>"},{"title":"DOMManipulator#setState","link":"<a href=\"DOMManipulator.html#setState\">DOMManipulator &rtrif; setState</a>"},{"title":"DOMManipulator#shouldUpdate","link":"<a href=\"DOMManipulator.html#shouldUpdate\">DOMManipulator &rtrif; shouldUpdate</a>"},{"title":"DOMManipulator#updateState","link":"<a href=\"DOMManipulator.html#updateState\">DOMManipulator &rtrif; updateState</a>"},{"title":"determineNodeType","link":"<a href=\"global.html#determineNodeType\">Global &rtrif; determineNodeType</a>"},{"title":"parseAndAttachCSS","link":"<a href=\"global.html#parseAndAttachCSS\">Global &rtrif; parseAndAttachCSS</a>"},{"title":"start","link":"<a href=\"global.html#start\">Global &rtrif; start</a>"},{"title":"updatePreview","link":"<a href=\"global.html#updatePreview\">Global &rtrif; updatePreview</a>"},{"title":"updateSelectorValue","link":"<a href=\"global.html#updateSelectorValue\">Global &rtrif; updateSelectorValue</a>"},{"title":"updateStorage","link":"<a href=\"global.html#updateStorage\">Global &rtrif; updateStorage</a>"},{"title":"updateValueDisplay","link":"<a href=\"global.html#updateValueDisplay\">Global &rtrif; updateValueDisplay</a>"},{"title":"updateVisualDefaults","link":"<a href=\"global.html#updateVisualDefaults\">Global &rtrif; updateVisualDefaults</a>"},{"title":"watchSelector","link":"<a href=\"global.html#watchSelector\">Global &rtrif; watchSelector</a>"}];
+var list = [{"title":"DOMManipulator","link":"<a href=\"DOMManipulator.html\">DOMManipulator</a>"},{"title":"DOMManipulator#formatNode","link":"<a href=\"DOMManipulator.html#formatNode\">DOMManipulator &rtrif; formatNode</a>"},{"title":"DOMManipulator#getNewTrackingList","link":"<a href=\"DOMManipulator.html#getNewTrackingList\">DOMManipulator &rtrif; getNewTrackingList</a>"},{"title":"DOMManipulator#observe","link":"<a href=\"DOMManipulator.html#observe\">DOMManipulator &rtrif; observe</a>"},{"title":"DOMManipulator#reformatDOM","link":"<a href=\"DOMManipulator.html#reformatDOM\">DOMManipulator &rtrif; reformatDOM</a>"},{"title":"DOMManipulator#scanDOM","link":"<a href=\"DOMManipulator.html#scanDOM\">DOMManipulator &rtrif; scanDOM</a>"},{"title":"DOMManipulator#setState","link":"<a href=\"DOMManipulator.html#setState\">DOMManipulator &rtrif; setState</a>"},{"title":"DOMManipulator#shouldUpdate","link":"<a href=\"DOMManipulator.html#shouldUpdate\">DOMManipulator &rtrif; shouldUpdate</a>"},{"title":"DOMManipulator#toggleObservation","link":"<a href=\"DOMManipulator.html#toggleObservation\">DOMManipulator &rtrif; toggleObservation</a>"},{"title":"determineNodeType","link":"<a href=\"global.html#determineNodeType\">Global &rtrif; determineNodeType</a>"},{"title":"parseAndAttachCSS","link":"<a href=\"global.html#parseAndAttachCSS\">Global &rtrif; parseAndAttachCSS</a>"},{"title":"start","link":"<a href=\"global.html#start\">Global &rtrif; start</a>"},{"title":"updatePreview","link":"<a href=\"global.html#updatePreview\">Global &rtrif; updatePreview</a>"},{"title":"updateSelectorValue","link":"<a href=\"global.html#updateSelectorValue\">Global &rtrif; updateSelectorValue</a>"},{"title":"updateStorage","link":"<a href=\"global.html#updateStorage\">Global &rtrif; updateStorage</a>"},{"title":"updateValueDisplay","link":"<a href=\"global.html#updateValueDisplay\">Global &rtrif; updateValueDisplay</a>"},{"title":"updateVisualDefaults","link":"<a href=\"global.html#updateVisualDefaults\">Global &rtrif; updateVisualDefaults</a>"},{"title":"watchSelector","link":"<a href=\"global.html#watchSelector\">Global &rtrif; watchSelector</a>"}];
 setupSearch(list)
 </script>
 

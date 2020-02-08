@@ -14,8 +14,8 @@
 			],
 			"menu": [
 				{
-					"title": "Ally Reads!",
-					"link": "https://kl13nt.github.io/ally-reads/index.html"
+					"title": "Download Ally Read!",
+					"link": "/web-ext-artifacts/allyreads-1.0.3-an+fx.xpi"
 				},
 				{
 					"title": "Github",

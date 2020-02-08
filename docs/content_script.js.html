@@ -48,7 +48,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html"><div class="text">Ally Reads!</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://kl13nt.github.io/ally-reads/index.html' class='' id='' target=''>Ally Reads!</a></li><li><a href='https://github.com/KL13NT/ally-reads' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="DOMManipulator.html">DOMManipulator</a><ul class='methods'><li data-type='method'><a href="DOMManipulator.html#formatText">formatText</a></li><li data-type='method'><a href="DOMManipulator.html#reformatDOM">reformatDOM</a></li><li data-type='method'><a href="DOMManipulator.html#scanDOM">scanDOM</a></li><li data-type='method'><a href="DOMManipulator.html#setState">setState</a></li><li data-type='method'><a href="DOMManipulator.html#shouldUpdate">shouldUpdate</a></li><li data-type='method'><a href="DOMManipulator.html#updateState">updateState</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#determineNodeType">determineNodeType</a></li><li><a href="global.html#parseAndAttachCSS">parseAndAttachCSS</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#updatePreview">updatePreview</a></li><li><a href="global.html#updateSelectorValue">updateSelectorValue</a></li><li><a href="global.html#updateStorage">updateStorage</a></li><li><a href="global.html#updateValueDisplay">updateValueDisplay</a></li><li><a href="global.html#updateVisualDefaults">updateVisualDefaults</a></li><li><a href="global.html#watchSelector">watchSelector</a></li></ul></div>
+    <h2><a href="index.html"><div class="text">Ally Reads!</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://kl13nt.github.io/ally-reads/index.html' class='' id='' target=''>Ally Reads!</a></li><li><a href='https://github.com/KL13NT/ally-reads' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="DOMManipulator.html">DOMManipulator</a><ul class='methods'><li data-type='method'><a href="DOMManipulator.html#formatNode">formatNode</a></li><li data-type='method'><a href="DOMManipulator.html#getNewTrackingList">getNewTrackingList</a></li><li data-type='method'><a href="DOMManipulator.html#observe">observe</a></li><li data-type='method'><a href="DOMManipulator.html#reformatDOM">reformatDOM</a></li><li data-type='method'><a href="DOMManipulator.html#scanDOM">scanDOM</a></li><li data-type='method'><a href="DOMManipulator.html#setState">setState</a></li><li data-type='method'><a href="DOMManipulator.html#shouldUpdate">shouldUpdate</a></li><li data-type='method'><a href="DOMManipulator.html#toggleObservation">toggleObservation</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#determineNodeType">determineNodeType</a></li><li><a href="global.html#parseAndAttachCSS">parseAndAttachCSS</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#updatePreview">updatePreview</a></li><li><a href="global.html#updateSelectorValue">updateSelectorValue</a></li><li><a href="global.html#updateStorage">updateStorage</a></li><li><a href="global.html#updateValueDisplay">updateValueDisplay</a></li><li><a href="global.html#updateVisualDefaults">updateVisualDefaults</a></li><li><a href="global.html#watchSelector">watchSelector</a></li></ul></div>
 </nav>
 
 <div id="main">
@@ -63,7 +63,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
+            <pre class="prettyprint source linenums"><code>/* eslint-env browser, webextensions */
+
+/**
  * Extension settings custom schema
  * @typedef {Object} ExtensionSettings
  * @property {object} style defines style values
@@ -83,6 +85,12 @@
  * @property {boolean} DOMEnable enables dom modifications
  */
 
+/**
+ * Extension settings custom schema
+ * @typedef {array} MutationList
+ * @property {MutationRecord} MutationRecord defines style values
+ */
+
 
 const OptionsSchema = {
 	schema: {
@@ -96,7 +104,7 @@ const OptionsSchema = {
 			'font-size': 'px',
 			'line-height': '',
 			'letter-spacing': 'px',
-			'word-spacing': 'px',
+			'word-spacing': 'px'
 		},
 
 		linesPerParagraph: 3,
@@ -114,130 +122,182 @@ const OptionsSchema = {
 	verifySchema: function ({ style, styleUnits, ...pluginSettings }){
 		const { style: schemaStyle, styleUnits: schemaStyleUnits, ...schemaSettings } = this.schema
 
-		if(
-			Object.keys(style).length !== Object.keys(schemaStyle).length
-			|| Object.keys(styleUnits).length !== Object.keys(schemaStyleUnits).length
-			|| Object.keys(pluginSettings).length !== Object.keys(schemaSettings).length
-		) return false
+		try{
+			if(
+				Object.keys(style).length !== Object.keys(schemaStyle).length
+				|| Object.keys(styleUnits).length !== Object.keys(schemaStyleUnits).length
+				|| Object.keys(pluginSettings).length !== Object.keys(schemaSettings).length
+			) return false
 
-		return true
+			return true
+		}
+		catch(err){
+			return false
+		}
 	}
 }
 
-
+/**
+ * @property {boolean} observationEnabled
+ * @property {ExtensionSettings} settings
+ * @property {ExtensionSettings} settings
+ */
 class DOMManipulator{
 	/**
-	 *
 	 * @param {ExtensionSettings} settings
 	 */
-	constructor(settings){
+	constructor (settings){
 		this.state = {
 			trackedElements: []
 		}
 
-		//TODO: idek, instead of throwing, maybe use defaults?
 		if(!OptionsSchema.verifySchema(settings))
 			throw Error ('Settings passed to DOMManipulator does not match schema')
 
 		this.settings = { ...settings }
+		this.observationEnabled = false
+		this.currentURL = null
+
+		this.toggleObservation = this.toggleObservation.bind(this)
 
 		parseAndAttachCSS(this.settings)
 	}
-
-	/**
-	 * Parses the settings and sets them as state
-	 * @param {object} settings Extension's settings set by user
-	 */
-
 
 	/**
 	 *
 	 * @param {DOMTree} newDOM
 	 * @param {DOMTree} oldDOM
 	 */
-	shouldUpdate(newState){
+	shouldUpdate (newState){
 		if(JSON.stringify(newState) === JSON.stringify(this.state)) return false
 		return true
 	}
 
-	/**
-	 * Updates the state of the DOMManipulator using the new tracking list
-	 * @param {object} newState updated state
-	 */
-	updateState(newState){
-		this.state = { ...this.state, ...newState }
-
-		this.reformatDOM()
-	}
 
 	/**
 	 * Formats paragraphs according to settings
-	 * @param {string} textContent Text content of paragraphs
+	 * @param {HTMLElement} node Text content of paragraphs
 	 */
-	formatText(textContent){
+	formatNode (node){
 		const { wordsPerLine, linesPerParagraph } = this.settings
 
-		let wordCounter = 0
-		let lineCounter = 0
+		//TODO: use an HTML parser to parse the DOM tree properly and replace inner text instead of inner children as a whole.
+		node.childNodes.forEach( node => {
+			if(node.nodeType === 3){
+				const textContent = node.textContent || ''
 
-		const modifiedParagraph = textContent.split(/\s/g).reduce((final, word) => {
-			if(wordCounter++ &lt; wordsPerLine) return final + word + ' '
-			else {
-				wordCounter = 0
+				let wordCounter = 0
+				let lineCounter = 1
 
-				if(lineCounter++ &lt; linesPerParagraph - 1) return final + '&lt;br>' + word + ' '
+				node.textContent = textContent.split(/\s/g).reduce((final, word) => {
+					if(wordCounter++ &lt; wordsPerLine) return final + word + ' '
+					else {
+						wordCounter = 1
 
-				else {
-					lineCounter = 0
-					return final + '&lt;br>&lt;br>' + word + ' '
-				}
+						if(lineCounter++ &lt; linesPerParagraph) return final + '\r\n' + word + ' '
 
+						else {
+							lineCounter = 1
+							return final + '\r\n\r\n' + word + ' '
+						}
+
+					}
+				}, '')
 			}
-		}, '')
+		})
 
-		return modifiedParagraph.trim()
 	}
 
 	/**
 	 * Uses the list of currently tracked &lt;p> tags and formats them according to settings
 	 */
-	reformatDOM(){
+	reformatDOM (){
 		this.state.trackedElements.forEach(node => {
-			if(this.settings.DOMEnable) node.innerHTML = this.formatText(node.innerHTML)
+			if(this.settings.DOMEnable) this.formatNode(node)
 			if(this.settings.styleEnable) node.classList.add('ally-reads_improved_reading')
 		})
+
+		setTimeout(this.toggleObservation, 1000)
+	}
+
+	//BUG: the observer catches modifications made by the extension itself.
+	/**
+	 * Observation handler
+	 * @param {array} mutationList - Array of MutationRecord's
+	 */
+
+	observe (mutationList){
+		//REFACTORME: Use a better detection model
+
+		if(this.observationEnabled || window.location.href !== this.currentURL){
+			if(this.observationEnabled) this.toggleObservation()
+
+			setTimeout(() => {
+				for(const mutation of mutationList){
+					//Updating the tracking list will get the latest result regardless of current index in the iteration loop.
+
+					if(mutation.type === 'childList') {
+
+						this.setState({
+							...this.state,
+							trackedElements: this.getNewTrackingList()
+						})
+
+						this.reformatDOM()
+
+						break
+					}
+				}
+			}, 2000) // scans the dom after 2 second of detecting mutation. This is to avoid wasted scans.
+
+		}
+	}
+
+	/**
+	 * Gets the new tracking list based on whether it's the same page
+	 * @returns {array} array of HTMLElement
+	 */
+
+	getNewTrackingList (){
+		if(window.location.href === this.currentURL){
+			return Array
+				.from(document.querySelectorAll('p'))
+				.slice(this.state.trackedElements.length)
+		}
+		else return Array.from(document.querySelectorAll('p'))
+	}
+
+	/**
+	 * Toggles the observation handler
+	 */
+	toggleObservation (){
+		this.observationEnabled = !this.observationEnabled
 	}
 
 	/**
 	 * Scans the DOM for &lt;p> tags and listens for changes to the dom. Uses MutationObserver to check for DOM mutations and an interval for older browsers.
 	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver|Mutation Observer - MDN}
 	 */
-	scanDOM(){
-		const newTrackingList = Array.from(document.getElementsByTagName('p'))
-		this.setState(newTrackingList)
+	scanDOM (){
+		const newTrackingList = this.getNewTrackingList()
+		this.setState({ ...this.state, trackedElements: newTrackingList })
+		this.reformatDOM()
 
 		if(window.MutationObserver){
-			const observer = new MutationObserver(mutationList => {
-				for(const mutation of mutationList){
-					//Updating the tracking list will get the latest result regardless of current index in the iteration loop.
-
-					if(mutation.type === 'childList') {
-						//REFACTORME: Could use some tree-based algorithm to search the DOM for added `p` nodes instead of scanning the whole DOM again
-
-						const newTrackingList = Array.from(document.getElementsByTagName('p'))
-						this.setState(newTrackingList)
-
-						break
-					}
-				}
-			})
-
+			// calling using observe.call instead of direct to avoid setting MutationObserver as `this` for the handler.
+			const observer = new MutationObserver(mutationList => this.observe.call(this, mutationList))
 			observer.observe(document.querySelector('body'), { subtree: true, childList: true })
+
 		}
 		else {
-			setInterval(()=>{
-				const newTrackingList = Array.from(document.getElementsByTagName('p'))
-				this.setState(newTrackingList)
+			setInterval(() => {
+
+				this.setState({
+					...this.state,
+					trackedElements: this.getNewTrackingList()
+				})
+				this.reformatDOM()
+
 			}, 5000)
 		}
 
@@ -247,12 +307,10 @@ class DOMManipulator{
 	 * Defers and updates state
 	 * @param {array} newTrackingList A new list of &lt;p> tags
 	 */
-	setState(newTrackingList){
-		const newState = {
-			trackedElements: [...this.state.trackedElements, ...newTrackingList]
+	setState (nextState){
+		if(this.shouldUpdate(nextState)){
+			this.state = { ...nextState }
 		}
-
-		if(this.shouldUpdate(newState)) this.updateState(newState)
 	}
 }
 
@@ -260,7 +318,7 @@ class DOMManipulator{
  * Starts the extension content_script after a timeout. The timeout here is used to avoid expensive wasted scans for browsers that support MutationObserver.
  * @see {@link scanDOM}
  */
-function start(){
+function start (){
 	setTimeout(async () => {
 
 		const options = await browser.storage.local.get()
@@ -276,27 +334,30 @@ function start(){
  * Parses extension settings and creates a new stylesheet before attaching it to the DOM
  * @param {ExtensionSettings} settings
  */
-function parseAndAttachCSS(settings){
+function parseAndAttachCSS (settings){
 	const { style, styleUnits } = settings
 
 	const newStylesheet = document.createElement('style')
 	newStylesheet.type = 'text/css'
 
-	newStylesheet.innerHTML = `.ally-reads_improved_reading{\n`
+	newStylesheet.innerHTML = '.ally-reads_improved_reading{\n'
 
 	for(const key in style){
-		if(style[key] > 0) newStylesheet.innerHTML += `${key}: ${style[key]}${styleUnits[key]};\n`
+		if(style[key] > 0) newStylesheet.innerHTML += `${key}: ${style[key]}${styleUnits[key]} !important;\n`
 	}
 
-	newStylesheet.innerHTML += `}`
+	newStylesheet.innerHTML += '}'
 
 	document.getElementsByTagName('head')[0].appendChild(newStylesheet)
 }
 
 
-window.addEventListener('load', ()=>{
+window.addEventListener('load', () => {
 	start()
-})</code></pre>
+})
+
+//TESTING: uncomment this line when testing
+// module.exports = { DOMManipulator, OptionsSchema, parseAndAttachCSS }</code></pre>
         </article>
     </section>
 
@@ -314,7 +375,7 @@ window.addEventListener('load', ()=>{
 <script>prettyPrint();</script>
 <script src="scripts/linenumber.js"></script>
 <script>
-var list = [{"title":"DOMManipulator","link":"<a href=\"DOMManipulator.html\">DOMManipulator</a>"},{"title":"DOMManipulator#formatText","link":"<a href=\"DOMManipulator.html#formatText\">DOMManipulator &rtrif; formatText</a>"},{"title":"DOMManipulator#reformatDOM","link":"<a href=\"DOMManipulator.html#reformatDOM\">DOMManipulator &rtrif; reformatDOM</a>"},{"title":"DOMManipulator#scanDOM","link":"<a href=\"DOMManipulator.html#scanDOM\">DOMManipulator &rtrif; scanDOM</a>"},{"title":"DOMManipulator#setState","link":"<a href=\"DOMManipulator.html#setState\">DOMManipulator &rtrif; setState</a>"},{"title":"DOMManipulator#shouldUpdate","link":"<a href=\"DOMManipulator.html#shouldUpdate\">DOMManipulator &rtrif; shouldUpdate</a>"},{"title":"DOMManipulator#updateState","link":"<a href=\"DOMManipulator.html#updateState\">DOMManipulator &rtrif; updateState</a>"},{"title":"determineNodeType","link":"<a href=\"global.html#determineNodeType\">Global &rtrif; determineNodeType</a>"},{"title":"parseAndAttachCSS","link":"<a href=\"global.html#parseAndAttachCSS\">Global &rtrif; parseAndAttachCSS</a>"},{"title":"start","link":"<a href=\"global.html#start\">Global &rtrif; start</a>"},{"title":"updatePreview","link":"<a href=\"global.html#updatePreview\">Global &rtrif; updatePreview</a>"},{"title":"updateSelectorValue","link":"<a href=\"global.html#updateSelectorValue\">Global &rtrif; updateSelectorValue</a>"},{"title":"updateStorage","link":"<a href=\"global.html#updateStorage\">Global &rtrif; updateStorage</a>"},{"title":"updateValueDisplay","link":"<a href=\"global.html#updateValueDisplay\">Global &rtrif; updateValueDisplay</a>"},{"title":"updateVisualDefaults","link":"<a href=\"global.html#updateVisualDefaults\">Global &rtrif; updateVisualDefaults</a>"},{"title":"watchSelector","link":"<a href=\"global.html#watchSelector\">Global &rtrif; watchSelector</a>"}];
+var list = [{"title":"DOMManipulator","link":"<a href=\"DOMManipulator.html\">DOMManipulator</a>"},{"title":"DOMManipulator#formatNode","link":"<a href=\"DOMManipulator.html#formatNode\">DOMManipulator &rtrif; formatNode</a>"},{"title":"DOMManipulator#getNewTrackingList","link":"<a href=\"DOMManipulator.html#getNewTrackingList\">DOMManipulator &rtrif; getNewTrackingList</a>"},{"title":"DOMManipulator#observe","link":"<a href=\"DOMManipulator.html#observe\">DOMManipulator &rtrif; observe</a>"},{"title":"DOMManipulator#reformatDOM","link":"<a href=\"DOMManipulator.html#reformatDOM\">DOMManipulator &rtrif; reformatDOM</a>"},{"title":"DOMManipulator#scanDOM","link":"<a href=\"DOMManipulator.html#scanDOM\">DOMManipulator &rtrif; scanDOM</a>"},{"title":"DOMManipulator#setState","link":"<a href=\"DOMManipulator.html#setState\">DOMManipulator &rtrif; setState</a>"},{"title":"DOMManipulator#shouldUpdate","link":"<a href=\"DOMManipulator.html#shouldUpdate\">DOMManipulator &rtrif; shouldUpdate</a>"},{"title":"DOMManipulator#toggleObservation","link":"<a href=\"DOMManipulator.html#toggleObservation\">DOMManipulator &rtrif; toggleObservation</a>"},{"title":"determineNodeType","link":"<a href=\"global.html#determineNodeType\">Global &rtrif; determineNodeType</a>"},{"title":"parseAndAttachCSS","link":"<a href=\"global.html#parseAndAttachCSS\">Global &rtrif; parseAndAttachCSS</a>"},{"title":"start","link":"<a href=\"global.html#start\">Global &rtrif; start</a>"},{"title":"updatePreview","link":"<a href=\"global.html#updatePreview\">Global &rtrif; updatePreview</a>"},{"title":"updateSelectorValue","link":"<a href=\"global.html#updateSelectorValue\">Global &rtrif; updateSelectorValue</a>"},{"title":"updateStorage","link":"<a href=\"global.html#updateStorage\">Global &rtrif; updateStorage</a>"},{"title":"updateValueDisplay","link":"<a href=\"global.html#updateValueDisplay\">Global &rtrif; updateValueDisplay</a>"},{"title":"updateVisualDefaults","link":"<a href=\"global.html#updateVisualDefaults\">Global &rtrif; updateVisualDefaults</a>"},{"title":"watchSelector","link":"<a href=\"global.html#watchSelector\">Global &rtrif; watchSelector</a>"}];
 setupSearch(list)
 </script>
 

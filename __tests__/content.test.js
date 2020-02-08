@@ -1,4 +1,4 @@
-/* eslint-env jest */
+/* eslint-env jest, browser */
 
 const { JSDOM } = require('jsdom')
 const { stringify } = JSON
@@ -62,42 +62,10 @@ describe('content_browser contents testing', () => {
 
 	})
 
-	test('formatText should return correct respective to wordsPerLine in schema', () => {
-
-		testSchema.wordsPerLine = 2
-		const manip = new DOMManipulator(testSchema)
-
-		expect(stringify(manip.formatText('hello'))).toEqual(stringify('hello'))
-		expect(stringify(manip.formatText('hello world'))).toEqual(stringify('hello world'))
-		expect(stringify(manip.formatText('hello world world'))).toEqual(stringify('hello world \r\nworld'))
-
-		manip.settings.wordsPerLine = 3
-
-		expect(stringify(manip.formatText('word1 word2 word3'))).toEqual(stringify('word1 word2 word3'))
-	})
-
-	test('formatText should return correct respective to linesPerParagraph in schema', () => {
-
-		testSchema.wordsPerLine = 2
-		testSchema.linesPerParagraph = 1
-
-		const manip = new DOMManipulator(testSchema)
-
-		expect(stringify(manip.formatText('word1 word2 word3'))).toEqual(stringify('word1 word2 \r\n\r\nword3'))
-		expect(stringify(manip.formatText('word1 word2 word3 paragraph2'))).toEqual(stringify('word1 word2 \r\n\r\nword3 paragraph2'))
-
-		manip.settings.linesPerParagraph = 2
-		expect(stringify(manip.formatText('word1 word2 word3 word4'))).toEqual(stringify('word1 word2 \r\nword3 word4'))
-		expect(stringify(manip.formatText('word1 word2 word3 word4 word5'))).toEqual(stringify('word1 word2 \r\nword3 word4 \r\n\r\nword5'))
-
-		manip.settings.wordsPerLine = 4
-		expect(stringify(manip.formatText('word1 word2 word3 word4'))).toEqual(stringify('word1 word2 word3 word4'))
-		expect(stringify(manip.formatText('word1 word2 word3 word4 word5'))).toEqual(stringify('word1 word2 word3 word4 \r\nword5'))
-
-		manip.settings.linesPerParagraph = 1
-		expect(stringify(manip.formatText('word1 word2 word3 word4'))).toEqual(stringify('word1 word2 word3 word4'))
-		expect(stringify(manip.formatText('word1 word2 word3 word4 word5'))).toEqual(stringify('word1 word2 word3 word4 \r\n\r\nword5'))
-	})
+	/**
+	 * Testing formatNode depends on user interaction and settings
+	 * When testing it, inspect the visual aspects and the HTML
+	 */
 
 	test('setState should update state accordingly', () => {
 		const manip = new DOMManipulator(testSchema) //has empty state

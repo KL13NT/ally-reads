@@ -34,9 +34,11 @@ I love contributing to OSS! And would love contributions to this repo. If you ha
 Please follow the formatting rules in the eslint config file. I'll be writing tests soon.
 
 ## Lifecycle
-I develop features and fix bugs and push them to `develop`, when it's time to release completely I push to a version-named branch and `master`. Documentation is updated every time there's a new build.
+I develop features and fix bugs and push them to `develop`, when it's time to release completely I push to `master`. Documentation is updated every time there's a new build.
 
 ## Upcoming Features
+- **Format any element**: In this, you will be able to format any element as easy as clicking your mouse.
+
 - **Smarter word breaks**: You may notice that sometimes the end of sentences come on a new line instead of completing the current one, and other spacing-related bugs. These are caused by the way the extension handles words and spacing. Will be fixing it soon.
 
 - **Font selection list**: To allow you to select a font for all paragraphs on all websites, or maybe even all elements. But to preserve the look and feel of websites there would be an option for the user to specify which behaviour they want.
@@ -45,13 +47,20 @@ I develop features and fix bugs and push them to `develop`, when it's time to re
 
 - **Instant word definitions**: Click a word and get definitions for it right away!
 
+- **Change settings on the fly**: Allows you to change extension settings without going to addon-settings.
+
 ## Testing
 Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in `content_script.js`.
 
 ## Known Bugs
-- **Broken links**: The extension uses a very basic approach to replace `<p>` tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.
+- **Broken links** *#003* *Fixed*: The extension uses a very basic approach to replace `<p>` tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.
 
 ## Change Log
+- **v1.0.3**
+	- Bug fixes:
+
+		- Broken Links#003 Replaced the logic by modifying only textNodes inside of each p node.
+
 - **v1.0.2**
 	- Implemented unit tests
 	- Bug fixes

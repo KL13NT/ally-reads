@@ -90,9 +90,10 @@ class DOMManipulator{
 			throw Error ('Settings passed to DOMManipulator does not match schema')
 
 		this.settings = { ...settings }
-		this.observationEnabled = true
+		this.observationEnabled = false
 		this.currentURL = null
 
+		this.toggleObservation = this.toggleObservation.bind(this)
 
 		parseAndAttachCSS(this.settings)
 	}
@@ -110,31 +111,36 @@ class DOMManipulator{
 
 	/**
 	 * Formats paragraphs according to settings
-	 * @param {string} textContent Text content of paragraphs
+	 * @param {HTMLElement} node Text content of paragraphs
 	 */
-	formatText (textContent){
-		//TODO: use an HTML parser to parse the DOM tree properly and replace inner text instead of inner children as a whole.
+	formatNode (node){
 		const { wordsPerLine, linesPerParagraph } = this.settings
 
-		let wordCounter = 0
-		let lineCounter = 1
+		//TODO: use an HTML parser to parse the DOM tree properly and replace inner text instead of inner children as a whole.
+		node.childNodes.forEach( node => {
+			if(node.nodeType === 3){
+				const textContent = node.textContent || ''
 
-		const modifiedParagraph = textContent.split(/\s/g).reduce((final, word) => {
-			if(wordCounter++ < wordsPerLine) return final + word + ' '
-			else {
-				wordCounter = 1
+				let wordCounter = 0
+				let lineCounter = 1
 
-				if(lineCounter++ < linesPerParagraph) return final + '\r\n' + word + ' '
+				node.textContent = textContent.split(/\s/g).reduce((final, word) => {
+					if(wordCounter++ < wordsPerLine) return final + word + ' '
+					else {
+						wordCounter = 1
 
-				else {
-					lineCounter = 1
-					return final + '\r\n\r\n' + word + ' '
-				}
+						if(lineCounter++ < linesPerParagraph) return final + '\r\n' + word + ' '
 
+						else {
+							lineCounter = 1
+							return final + '\r\n\r\n' + word + ' '
+						}
+
+					}
+				}, '')
 			}
-		}, '')
+		})
 
-		return modifiedParagraph.trim()
 	}
 
 	/**
@@ -142,7 +148,7 @@ class DOMManipulator{
 	 */
 	reformatDOM (){
 		this.state.trackedElements.forEach(node => {
-			if(this.settings.DOMEnable) node.textContent = this.formatText(node.textContent)
+			if(this.settings.DOMEnable) this.formatNode(node)
 			if(this.settings.styleEnable) node.classList.add('ally-reads_improved_reading')
 		})
 
@@ -152,12 +158,14 @@ class DOMManipulator{
 	//BUG: the observer catches modifications made by the extension itself.
 	/**
 	 * Observation handler
-	 * @param {[MutationRecord]} mutationList
+	 * @param {array} mutationList - Array of MutationRecord's
 	 */
 
 	observe (mutationList){
-		if(this.observationEnabled){
-			this.toggleObservation()
+		//REFACTORME: Use a better detection model
+
+		if(this.observationEnabled || window.location.href !== this.currentURL){
+			if(this.observationEnabled) this.toggleObservation()
 
 			setTimeout(() => {
 				for(const mutation of mutationList){
@@ -182,7 +190,7 @@ class DOMManipulator{
 
 	/**
 	 * Gets the new tracking list based on whether it's the same page
-	 * @returns {[HTMLElement]} array of elements
+	 * @returns {array} array of HTMLElement
 	 */
 
 	getNewTrackingList (){

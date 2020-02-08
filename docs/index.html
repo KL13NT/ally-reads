@@ -48,7 +48,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html"><div class="text">Ally Reads!</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://kl13nt.github.io/ally-reads/index.html' class='' id='' target=''>Ally Reads!</a></li><li><a href='https://github.com/KL13NT/ally-reads' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="DOMManipulator.html">DOMManipulator</a><ul class='methods'><li data-type='method'><a href="DOMManipulator.html#formatText">formatText</a></li><li data-type='method'><a href="DOMManipulator.html#reformatDOM">reformatDOM</a></li><li data-type='method'><a href="DOMManipulator.html#scanDOM">scanDOM</a></li><li data-type='method'><a href="DOMManipulator.html#setState">setState</a></li><li data-type='method'><a href="DOMManipulator.html#shouldUpdate">shouldUpdate</a></li><li data-type='method'><a href="DOMManipulator.html#updateState">updateState</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#determineNodeType">determineNodeType</a></li><li><a href="global.html#parseAndAttachCSS">parseAndAttachCSS</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#updatePreview">updatePreview</a></li><li><a href="global.html#updateSelectorValue">updateSelectorValue</a></li><li><a href="global.html#updateStorage">updateStorage</a></li><li><a href="global.html#updateValueDisplay">updateValueDisplay</a></li><li><a href="global.html#updateVisualDefaults">updateVisualDefaults</a></li><li><a href="global.html#watchSelector">watchSelector</a></li></ul></div>
+    <h2><a href="index.html"><div class="text">Ally Reads!</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://kl13nt.github.io/ally-reads/index.html' class='' id='' target=''>Ally Reads!</a></li><li><a href='https://github.com/KL13NT/ally-reads' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="DOMManipulator.html">DOMManipulator</a><ul class='methods'><li data-type='method'><a href="DOMManipulator.html#formatNode">formatNode</a></li><li data-type='method'><a href="DOMManipulator.html#getNewTrackingList">getNewTrackingList</a></li><li data-type='method'><a href="DOMManipulator.html#observe">observe</a></li><li data-type='method'><a href="DOMManipulator.html#reformatDOM">reformatDOM</a></li><li data-type='method'><a href="DOMManipulator.html#scanDOM">scanDOM</a></li><li data-type='method'><a href="DOMManipulator.html#setState">setState</a></li><li data-type='method'><a href="DOMManipulator.html#shouldUpdate">shouldUpdate</a></li><li data-type='method'><a href="DOMManipulator.html#toggleObservation">toggleObservation</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#determineNodeType">determineNodeType</a></li><li><a href="global.html#parseAndAttachCSS">parseAndAttachCSS</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#updatePreview">updatePreview</a></li><li><a href="global.html#updateSelectorValue">updateSelectorValue</a></li><li><a href="global.html#updateStorage">updateStorage</a></li><li><a href="global.html#updateValueDisplay">updateValueDisplay</a></li><li><a href="global.html#updateVisualDefaults">updateVisualDefaults</a></li><li><a href="global.html#watchSelector">watchSelector</a></li></ul></div>
 </nav>
 
 <div id="main">
@@ -82,6 +82,9 @@
 <li><a href="#Contributing">Contributing</a></li>
 <li><a href="#Lifecycle">Lifecycle</a></li>
 <li><a href="#Upcoming-Features">Upcoming Features</a></li>
+<li><a href="#Testing">Testing</a></li>
+<li><a href="#Known-Bugs">Known Bugs</a></li>
+<li><a href="#Change-Log">Change Log</a></li>
 <li><a href="#License">License</a></li>
 </ul>
 <h2>Developer Notes</h2>
@@ -97,21 +100,76 @@
 <p>You can install it from the official extension stores or from its website. After installing you go to extension settings and configure it to your liking. There's a sample preview text for you to preview your changes. You can then rest assured it'll work on all paragraphs on all websites.</p>
 <h2>Contributing</h2>
 <p>I love contributing to OSS! And would love contributions to this repo. If you have a feature request, bug report, or have coded a new feature you can open an issue/PR/contact me anywhere and tell me all about it. If you have suggestions regarding cleaning up this codebase also feel free to tell me. I'd love to hear others' opinions on this.</p>
+<p>Please follow the formatting rules in the eslint config file. I'll be writing tests soon.</p>
 <h2>Lifecycle</h2>
-<p>I develop features and fix bugs and push them to <code>develop</code>, when it's time to release completely I push to a version-named branch and <code>master</code>. Documentation is updated every time there's a new build.</p>
+<p>I develop features and fix bugs and push them to <code>develop</code>, when it's time to release completely I push to <code>master</code>. Documentation is updated every time there's a new build.</p>
 <h2>Upcoming Features</h2>
 <ul>
+<li>
+<p><strong>Format any element</strong>: In this, you will be able to format any element as easy as clicking your mouse.</p>
+</li>
+<li>
+<p><strong>Smarter word breaks</strong>: You may notice that sometimes the end of sentences come on a new line instead of completing the current one, and other spacing-related bugs. These are caused by the way the extension handles words and spacing. Will be fixing it soon.</p>
+</li>
 <li>
 <p><strong>Font selection list</strong>: To allow you to select a font for all paragraphs on all websites, or maybe even all elements. But to preserve the look and feel of websites there would be an option for the user to specify which behaviour they want.</p>
 </li>
 <li>
-<p><strong>Text foreground colour selection</strong>: Pick the colour for the text you read.</p>
-</li>
-<li>
-<p><strong>Text background colour selection</strong>: Pick the colour for the background of the text your read.</p>
+<p><strong>Text foreground &amp; background colour selection</strong>: Colour what you read.</p>
 </li>
 <li>
 <p><strong>Instant word definitions</strong>: Click a word and get definitions for it right away!</p>
+</li>
+<li>
+<p><strong>Change settings on the fly</strong>: Allows you to change extension settings without going to addon-settings.</p>
+</li>
+</ul>
+<h2>Testing</h2>
+<p>Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in <code>content_script.js</code>.</p>
+<h2>Known Bugs</h2>
+<ul>
+<li><strong>Broken links</strong> <em>#003</em> <em>Fixed</em>: The extension uses a very basic approach to replace <code>&lt;p&gt;</code> tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.</li>
+</ul>
+<h2>Change Log</h2>
+<ul>
+<li>
+<p><strong>v1.0.3</strong></p>
+<ul>
+<li>
+<p>Bug fixes:</p>
+<ul>
+<li>Broken Links#003 Replaced the logic by modifying only textNodes inside of each p node.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>v1.0.2</strong></p>
+<ul>
+<li>Implemented unit tests</li>
+<li>Bug fixes</li>
+</ul>
+</li>
+<li>
+<p><strong>v1.0.1</strong></p>
+<ul>
+<li>
+<p>Bug fixes:</p>
+<ul>
+<li>Navigation#001</li>
+<li>Deferring Algorithm#002</li>
+</ul>
+</li>
+<li>
+<p>Improved Detection &amp; Collision Algorithms: The current algorithm is slow in detecting changes to the DOM and reacting to it. And it also lacks safety from collision caused by <em>separate</em> mutations.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>v1.0.0</strong></p>
+<ul>
+<li>Initial Release</li>
+</ul>
 </li>
 </ul>
 <h2>License</h2>
@@ -134,7 +192,7 @@
 <script>prettyPrint();</script>
 <script src="scripts/linenumber.js"></script>
 <script>
-var list = [{"title":"DOMManipulator","link":"<a href=\"DOMManipulator.html\">DOMManipulator</a>"},{"title":"DOMManipulator#formatText","link":"<a href=\"DOMManipulator.html#formatText\">DOMManipulator &rtrif; formatText</a>"},{"title":"DOMManipulator#reformatDOM","link":"<a href=\"DOMManipulator.html#reformatDOM\">DOMManipulator &rtrif; reformatDOM</a>"},{"title":"DOMManipulator#scanDOM","link":"<a href=\"DOMManipulator.html#scanDOM\">DOMManipulator &rtrif; scanDOM</a>"},{"title":"DOMManipulator#setState","link":"<a href=\"DOMManipulator.html#setState\">DOMManipulator &rtrif; setState</a>"},{"title":"DOMManipulator#shouldUpdate","link":"<a href=\"DOMManipulator.html#shouldUpdate\">DOMManipulator &rtrif; shouldUpdate</a>"},{"title":"DOMManipulator#updateState","link":"<a href=\"DOMManipulator.html#updateState\">DOMManipulator &rtrif; updateState</a>"},{"title":"determineNodeType","link":"<a href=\"global.html#determineNodeType\">Global &rtrif; determineNodeType</a>"},{"title":"parseAndAttachCSS","link":"<a href=\"global.html#parseAndAttachCSS\">Global &rtrif; parseAndAttachCSS</a>"},{"title":"start","link":"<a href=\"global.html#start\">Global &rtrif; start</a>"},{"title":"updatePreview","link":"<a href=\"global.html#updatePreview\">Global &rtrif; updatePreview</a>"},{"title":"updateSelectorValue","link":"<a href=\"global.html#updateSelectorValue\">Global &rtrif; updateSelectorValue</a>"},{"title":"updateStorage","link":"<a href=\"global.html#updateStorage\">Global &rtrif; updateStorage</a>"},{"title":"updateValueDisplay","link":"<a href=\"global.html#updateValueDisplay\">Global &rtrif; updateValueDisplay</a>"},{"title":"updateVisualDefaults","link":"<a href=\"global.html#updateVisualDefaults\">Global &rtrif; updateVisualDefaults</a>"},{"title":"watchSelector","link":"<a href=\"global.html#watchSelector\">Global &rtrif; watchSelector</a>"}];
+var list = [{"title":"DOMManipulator","link":"<a href=\"DOMManipulator.html\">DOMManipulator</a>"},{"title":"DOMManipulator#formatNode","link":"<a href=\"DOMManipulator.html#formatNode\">DOMManipulator &rtrif; formatNode</a>"},{"title":"DOMManipulator#getNewTrackingList","link":"<a href=\"DOMManipulator.html#getNewTrackingList\">DOMManipulator &rtrif; getNewTrackingList</a>"},{"title":"DOMManipulator#observe","link":"<a href=\"DOMManipulator.html#observe\">DOMManipulator &rtrif; observe</a>"},{"title":"DOMManipulator#reformatDOM","link":"<a href=\"DOMManipulator.html#reformatDOM\">DOMManipulator &rtrif; reformatDOM</a>"},{"title":"DOMManipulator#scanDOM","link":"<a href=\"DOMManipulator.html#scanDOM\">DOMManipulator &rtrif; scanDOM</a>"},{"title":"DOMManipulator#setState","link":"<a href=\"DOMManipulator.html#setState\">DOMManipulator &rtrif; setState</a>"},{"title":"DOMManipulator#shouldUpdate","link":"<a href=\"DOMManipulator.html#shouldUpdate\">DOMManipulator &rtrif; shouldUpdate</a>"},{"title":"DOMManipulator#toggleObservation","link":"<a href=\"DOMManipulator.html#toggleObservation\">DOMManipulator &rtrif; toggleObservation</a>"},{"title":"determineNodeType","link":"<a href=\"global.html#determineNodeType\">Global &rtrif; determineNodeType</a>"},{"title":"parseAndAttachCSS","link":"<a href=\"global.html#parseAndAttachCSS\">Global &rtrif; parseAndAttachCSS</a>"},{"title":"start","link":"<a href=\"global.html#start\">Global &rtrif; start</a>"},{"title":"updatePreview","link":"<a href=\"global.html#updatePreview\">Global &rtrif; updatePreview</a>"},{"title":"updateSelectorValue","link":"<a href=\"global.html#updateSelectorValue\">Global &rtrif; updateSelectorValue</a>"},{"title":"updateStorage","link":"<a href=\"global.html#updateStorage\">Global &rtrif; updateStorage</a>"},{"title":"updateValueDisplay","link":"<a href=\"global.html#updateValueDisplay\">Global &rtrif; updateValueDisplay</a>"},{"title":"updateVisualDefaults","link":"<a href=\"global.html#updateVisualDefaults\">Global &rtrif; updateVisualDefaults</a>"},{"title":"watchSelector","link":"<a href=\"global.html#watchSelector\">Global &rtrif; watchSelector</a>"}];
 setupSearch(list)
 </script>
 
