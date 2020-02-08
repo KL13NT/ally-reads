@@ -9,6 +9,7 @@ An accessibility suite giving you control over what you read.
 - [Lifecycle](#Lifecycle)
 - [Upcoming Features](#Upcoming-Features)
 - [Known Bugs](#Known-Bugs)
+- [Change Log](#Change-Log)
 - [License](#License)
 
 ## Developer Notes
@@ -35,8 +36,6 @@ I develop features and fix bugs and push them to `develop`, when it's time to re
 ## Upcoming Features
 - **Smarter word breaks**: You may notice that sometimes the end of sentences come on a new line instead of completing the current one, and other spacing-related bugs. These are caused by the way the extension handles words and spacing. Will be fixing it soon.
 
-- **Better DOM mutation detection**: The current algorithm is slow in detecting changes to the DOM and reacting to it. And it also lacks safety from collision caused by *separate* mutations.
-
 - **Font selection list**: To allow you to select a font for all paragraphs on all websites, or maybe even all elements. But to preserve the look and feel of websites there would be an option for the user to specify which behaviour they want.
 
 - **Text foreground & background colour selection**: Colour what you read.
@@ -44,9 +43,21 @@ I develop features and fix bugs and push them to `develop`, when it's time to re
 - **Instant word definitions**: Click a word and get definitions for it right away!
 
 ## Known Bugs
-- **Navigation**: Navigating different pages in the same tab causes the extension to go into an infinite loop.
+- **Navigation** *[#001]* *[Fixed]*: Navigating different pages in the same tab causes the extension to go into an infinite loop.
 
-- **Deferring Algorithm**: The extension detects its own DOM mutations and react to them. Need a better deferring algorithm.
+- **Deferring Algorithm** *[#001]* *[Fixed]*: The extension detects its own DOM mutations and react to them. Need a better deferring algorithm.
+
+## Change Log
+- **v1.0.1**
+	- Bug fixes:
+
+		- Navigation#001
+		- Deferring Algorithm#002
+
+	- Improved Detection & Collision Algorithms: The current algorithm is slow in detecting changes to the DOM and reacting to it. And it also lacks safety from collision caused by *separate* mutations.
+
+- **v1.0.0**
+	- Initial Release
 
 ## License
 This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. Find the license [here](../license)
