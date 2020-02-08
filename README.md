@@ -2,7 +2,7 @@
 
 <p align="center">
 
-![Logo](https://kl13nt.github.io/ally-reads/img/icon.png)
+<img align="center" alt="icon" src="https://kl13nt.github.io/ally-reads/img/icon.png">
 
 </p>
 
@@ -15,7 +15,7 @@ An accessibility suite giving you control over what you read.
 
 <p align="center">
 
-![screenshot](https://kl13nt.github.io/ally-reads/img/screenshot.PNG)
+<img align="center" alt="screenshot" height="400px" src="https://kl13nt.github.io/ally-reads/img/screenshot.PNG">
 
 </p>
 
