@@ -39,7 +39,7 @@ Hello there! Reading this means you're interested in the source code for this ex
 
 I'm Nabil Tharwat, a UXE based in Egypt. Feel free to contact me about anything and everything related to this codebase. If you want to request a feature, shoot me an issue on this repo or contact me on any platform. Wondering where to find me? Head to [iamnabil](https://iamnabil.me/about) and pick the platform you'd like. I'll let you read the documentation now. Have a lovely day!
 
-There's a DevLog/Timelapse video for the creation of this. It took me 1-2 full days. I'll link the video when it's uploaded.
+There's a DevLog/Timelapse video for the creation of this. It took me 1-2 full days. Find it here: <a href="">[Ally Reads! - Extension Development Devlog/Timelapse [Arabic]](https://www.youtube.com/watch?v=OeVvVMPCdbY)
 
 > Currently Firefox only is supported
 
@@ -52,7 +52,6 @@ You can install it from the official extension stores or from its website. After
 ## Contributing
 I love contributing to OSS! And would love contributions to this repo. If you have a feature request, bug report, or have coded a new feature you can open an issue/PR/contact me anywhere and tell me all about it. If you have suggestions regarding cleaning up this codebase also feel free to tell me. I'd love to hear others' opinions on this.
 
-Please follow the formatting rules in the eslint config file. I'll be writing tests soon.
 
 ## Lifecycle
 I develop features and fix bugs and push them to `develop`, when it's time to release completely I push to `master`. Documentation is updated every time there's a new build.
