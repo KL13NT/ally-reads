@@ -68,8 +68,8 @@ module.exports = {
 						"=": true
           }
     }],
-		"prefer-destructuring": ["error", {
-      "array": true,
+		"prefer-destructuring": ["warn", {
+      "array": false,
       "object": true
 			}, {
       "enforceForRenamedProperties": false

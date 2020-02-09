@@ -13,6 +13,10 @@
         {
           "version": "1.0.4",
           "update_link": "https://kl13nt.github.io/ally-reads/web-ext-artifacts/allyreads-1.0.4-an+fx.xpi"
+        },
+        {
+          "version": "1.0.5",
+          "update_link": "https://kl13nt.github.io/ally-reads/web-ext-artifacts/allyreads-1.0.5-an+fx.xpi"
         }
       ]
 		}

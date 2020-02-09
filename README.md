@@ -2,13 +2,14 @@
 
 <p align="center">
 
-<img align="center" alt="icon" src="https://kl13nt.github.io/ally-reads/img/icon.png">
+<img align="center" height="100px" alt="icon" src="https://kl13nt.github.io/ally-reads/img/icon.png">
+
+# Ally Reads!
 
 </p>
 
 </center>
 
-# Ally Reads!
 An accessibility suite giving you control over what you read.
 
 <center>
@@ -78,6 +79,10 @@ Unit Testing WebExtensions is such a pain that I decided not to cover the whole 
 - **Broken links** *#003* *Fixed*: The extension uses a very basic approach to replace `<p>` tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.
 
 ## Change Log
+
+- **v1.0.5**
+	- Bug fixes and improved testing
+
 - **v1.0.3**
 	- Bug fixes:
 
@@ -98,5 +103,7 @@ Unit Testing WebExtensions is such a pain that I decided not to cover the whole 
 - **v1.0.0**
 	- Initial Release
 
-## License
-This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. Find the license [here](../license)
+## Licence
+This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. This means you can use it commercially and privately, redistribute, and modify all while using the same licence and after stating the changes you made, as well as disclosing the source, which is this repo, or me personally. This licence doesn't guarantee liability or warranty of any kind. Use at will.
+
+Find the full licence [here](../license)

@@ -23,7 +23,7 @@
 					"target": "_blank"
 				}
 			],
-			"footer": "alpha@1.0.0"
+			"footer": "alpha@1.0"
 		},
 		"readme": "./README.md",
 		"template": "node_modules/clean-jsdoc-theme"

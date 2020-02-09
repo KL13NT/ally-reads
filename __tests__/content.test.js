@@ -24,7 +24,8 @@ const testSchema = {
 
 	autoScan: true,
 	styleEnable: true,
-	DOMEnable: true
+	DOMEnable: true,
+	enabled: true
 }
 
 describe('content_browser contents testing', () => {
@@ -82,6 +83,8 @@ describe('content_browser contents testing', () => {
 
 	test('parseAndAttachCSS should attach new CSS stylesheet element to <HEAD/>', () => {
 		parseAndAttachCSS(testSchema)
-		expect(document.getElementsByTagName('head')[0].children[0].textContent).toEqual('.ally-reads_improved_reading{\nfont-size: 16px !important;\n}')
+		const parsedCSS = '.ally-reads_improved_reading, .ally-reads_improved_reading *{\nfont-size: 16px !important;\n}'
+
+		expect(document.getElementsByTagName('head')[0].children[0].textContent).toEqual(parsedCSS)
 	})
 })
