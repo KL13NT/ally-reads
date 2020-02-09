@@ -165,28 +165,30 @@ class DOMManipulator{
 	 */
 
 	observe (mutationList){
-		//REFACTORME: Use a better detection model
+		if(this.settings.enabled){
+			if(this.observationEnabled || window.location.href !== this.currentURL){
+				if(this.observationEnabled) this.toggleObservation()
 
-		if(this.observationEnabled || window.location.href !== this.currentURL){
-			if(this.observationEnabled) this.toggleObservation()
+				setTimeout(() => {
+					for(const mutation of mutationList){
+						//Updating the tracking list will get the latest result regardless of current index in the iteration loop.
 
-			setTimeout(() => {
-				for(const mutation of mutationList){
-					//Updating the tracking list will get the latest result regardless of current index in the iteration loop.
+						if(mutation.type === 'childList') {
 
-					if(mutation.type === 'childList') {
+							this.setState({
+								...this.state,
+								trackedElements: this.getNewTrackingList()
+							})
 
-						this.setState({
-							...this.state,
-							trackedElements: this.getNewTrackingList()
-						})
+							this.reformatDOM()
 
-						this.reformatDOM()
-
-						break
+							break
+						}
 					}
-				}
-			}, 2000) // scans the dom after 2 second of detecting mutation. This is to avoid wasted scans.
+				}, 2000) // scans the dom after 2 second of detecting mutation. This is to avoid wasted scans.
+			}
+			//REFACTORME: Use a better detection model
+
 
 		}
 	}
@@ -198,11 +200,15 @@ class DOMManipulator{
 
 	getNewTrackingList (){
 		if(window.location.href === this.currentURL){
+
 			return Array
 				.from(document.querySelectorAll('p'))
 				.slice(this.state.trackedElements.length)
 		}
-		else return Array.from(document.querySelectorAll('p'))
+		else {
+			this.currentURL = window.location.href
+			return Array.from(document.querySelectorAll('p'))
+		}
 	}
 
 	/**
@@ -257,13 +263,22 @@ class DOMManipulator{
  * @see {@link scanDOM}
  */
 function start (){
-	setTimeout(async () => {
 
+	setTimeout(async () => {
 		const options = await browser.storage.local.get()
-		console.log(options)
+
 		if(options.enabled){
 			const mod = new DOMManipulator(options)
+
 			if(options.autoScan) mod.scanDOM()
+
+			window.addEventListener('keypress', () => {
+				mod.settings.enabled = false
+
+				setTimeout(() => {
+					mod.settings.enabled = true
+				}, 5000)
+			})
 		}
 
 

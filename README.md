@@ -74,11 +74,16 @@ I develop features and fix bugs and push them to `develop`, when it's time to re
 Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in `content_script.js`.
 
 ## Known Bugs
-- **Social media and text modifications** *#004*: Text modifications such as writing a facebook post or a tweet will cause the extension to query the DOM on every few key strokes. This is because of the behaviour of the MutationObserver API. A possible fix for it could be to detect keyboard events and/or check the type of element the user is updating (i.e. text area, input field, etc.)
+- **Social media and text modifications** *#004* *Fixed*: Text modifications such as writing a facebook post or a tweet will cause the extension to query the DOM on every few key strokes. This is because of the behaviour of the MutationObserver API. A possible fix for it could be to detect keyboard events and/or check the type of element the user is updating (i.e. text area, input field, etc.)
 
 - **Broken links** *#003* *Fixed*: The extension uses a very basic approach to replace `<p>` tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.
 
 ## Change Log
+
+- **v1.0.6**
+	- Fixed bug #004 user-intiated mutations
+	- Fixed a bug where changing checkbox values in settings didn't reflect
+	- Fixed a scanning bug where the extension re-formatted the already formatted elements
 
 - **v1.0.5**
 	- Bug fixes and improved testing

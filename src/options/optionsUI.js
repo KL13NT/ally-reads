@@ -54,7 +54,7 @@ async function updateStorage (updatedSelector){
 
 	const oldStorage = await browser.storage.local.get()
 
-	if(selector.type === 'check')
+	if(selector.type === 'checkbox')
 		await browser.storage.local.set({
 			...oldStorage,
 			[name]: checked
