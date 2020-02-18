@@ -1,15 +1,24 @@
 <center>
 
-![Logo](./src/icons/icon.png)
+<p align="center">
+
+<img align="center" height="100px" alt="icon" src="https://kl13nt.github.io/ally-reads/img/icon.png">
+
+# Ally Reads!
+
+</p>
 
 </center>
 
-# Ally Reads!
 An accessibility suite giving you control over what you read.
 
 <center>
 
-![screenshot](./docs/img/screenshot.png)
+<p align="center">
+
+<img align="center" alt="screenshot" height="400px" src="https://kl13nt.github.io/ally-reads/img/screenshot.PNG">
+
+</p>
 
 </center>
 
@@ -30,7 +39,7 @@ Hello there! Reading this means you're interested in the source code for this ex
 
 I'm Nabil Tharwat, a UXE based in Egypt. Feel free to contact me about anything and everything related to this codebase. If you want to request a feature, shoot me an issue on this repo or contact me on any platform. Wondering where to find me? Head to [iamnabil](https://iamnabil.me/about) and pick the platform you'd like. I'll let you read the documentation now. Have a lovely day!
 
-There's a DevLog/Timelapse video for the creation of this. It took me 1-2 full days. I'll link the video when it's uploaded.
+There's a DevLog/Timelapse video for the creation of this. It took me 1-2 full days. Find it here: <a href="">[Ally Reads! - Extension Development Devlog/Timelapse [Arabic]](https://www.youtube.com/watch?v=OeVvVMPCdbY)
 
 > Currently Firefox only is supported
 
@@ -43,19 +52,30 @@ You can install it from the official extension stores or from its website. After
 ## Contributing
 I love contributing to OSS! And would love contributions to this repo. If you have a feature request, bug report, or have coded a new feature you can open an issue/PR/contact me anywhere and tell me all about it. If you have suggestions regarding cleaning up this codebase also feel free to tell me. I'd love to hear others' opinions on this.
 
-Please follow the formatting rules in the eslint config file. I'll be writing tests soon.
 
 ## Lifecycle
-I develop features and fix bugs and push them to `develop`, when it's time to release completely I push to `master`. Documentation is updated every time there's a new build. Commits follow the following criteria:
+Commits follow a schema that's defined as `[<type>] <commit_message>`, where `<type>` is one of:
+- `Bug`: Bug fixes and commits related to them
+- `Feature`: Feature updates and incremental additions
+- `Docs`: Documentation updates
+- `Config`: Configuration changes
+- `Amend`: Fixing older commits and/or rebasing them
 
-- `[Config]`: For codebase configuration changes
-- `[Docs]`: For documentation changes
-- `[Feature]`: For new feature updates
-- `[Bug]`: For bug fixes
+All commits are on `develop` branch by default and new releases are then PR'ed into `master` which in turn starts the CI stages:
+1. `lint`
+2. `test`
+3. if both previous passed, `build`
+4. if `build` passed, generate new `docs`
+5. deploy to gh-pages branch
 
-The commit is then pulled by TravisCI and tested using Jest. Upon confirmation the new build is going to deploy to gh-pages with the new release.
+> You're well advised to make sure tests and linting pass on your machine locally before pushing.
 
-Feature and Bug commits often trigger version upgrades. To skip builds and not deploy specific commits use the form `[<type>][skip travis] <commit message>` where `<type>` is one of the mentioned above.
+I use TravisCI and the configuration is based on some important env variables:
+- `API_KEY`: Mozilla addon api key
+- `API_SECRET`: Mozilla addon api secret
+- `GITHUB_ACCESS_TOKEN`: Access token for GitHub account to enable Travis to push and control the flow of the repo.
+
+> Starting with v1.0.6, the repo is using semver for versioning as well as the rules introduced earlier regarding commit messages.
 
 ## Upcoming Features
 - **Format any element**: In this, you will be able to format any element as easy as clicking your mouse.
@@ -73,12 +93,23 @@ Feature and Bug commits often trigger version upgrades. To skip builds and not d
 ## Testing
 ~~Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in `content_script.js`.~~
 
-Testing is now way easier and better since I introduced Webpack to the codebase. Now modules work properly while maintaining the availability of the extension build.
+Testing is now possible and easy since I introduced Webpack to the codebase. It now handles building parallel to web-ext where Webpack bundles the JS modules needed and stores them in `dist/` and web-ext hot-loads the extension and all needed config.
 
 ## Known Bugs
+- **Social media and text modifications** *#004* *Fixed*: Text modifications such as writing a facebook post or a tweet will cause the extension to query the DOM on every few key strokes. This is because of the behaviour of the MutationObserver API. A possible fix for it could be to detect keyboard events and/or check the type of element the user is updating (i.e. text area, input field, etc.)
+
 - **Broken links** *#003* *Fixed*: The extension uses a very basic approach to replace `<p>` tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.
 
 ## Change Log
+
+- **v1.0.6**
+	- Fixed bug #004 user-intiated mutations
+	- Fixed a bug where changing checkbox values in settings didn't reflect
+	- Fixed a scanning bug where the extension re-formatted the already formatted elements
+
+- **v1.0.5**
+	- Bug fixes and improved testing
+
 - **v1.0.3**
 	- Bug fixes:
 
@@ -99,5 +130,7 @@ Testing is now way easier and better since I introduced Webpack to the codebase.
 - **v1.0.0**
 	- Initial Release
 
-## License
-This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. Find the license [here](../license)
+## Licence
+This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. This means you can use it commercially and privately, redistribute, and modify all while using the same licence and after stating the changes you made, as well as disclosing the source, which is this repo, or me personally. This licence doesn't guarantee liability or warranty of any kind. Use at will.
+
+Find the full licence [here](../license)

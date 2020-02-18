@@ -13,8 +13,6 @@
         {
           "version": "1.0.4",
           "update_link": "https://kl13nt.github.io/ally-reads/web-ext-artifacts/allyreads-1.0.4-an+fx.xpi"
-<<<<<<< Updated upstream
-=======
         },
         {
           "version": "1.0.5",
@@ -23,7 +21,6 @@
         {
           "version": "1.0.6",
           "update_link": "https://kl13nt.github.io/ally-reads/web-ext-artifacts/allyreads-1.0.6-an+fx.xpi"
->>>>>>> Stashed changes
         }
       ]
 		}

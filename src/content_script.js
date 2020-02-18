@@ -47,7 +47,8 @@ const OptionsSchema = {
 
 		autoScan: true,
 		styleEnable: true,
-		DOMEnable: true
+		DOMEnable: true,
+		enabled: true
 	},
 
 	/**
@@ -113,11 +114,11 @@ class DOMManipulator{
 	 * Formats paragraphs according to settings
 	 * @param {HTMLElement} node Text content of paragraphs
 	 */
-	formatNode (node){
+	formatNode (htmlNode){
 		const { wordsPerLine, linesPerParagraph } = this.settings
 
-		//TODO: use an HTML parser to parse the DOM tree properly and replace inner text instead of inner children as a whole.
-		node.childNodes.forEach( node => {
+		htmlNode.childNodes.forEach( node => {
+			// if(node.nodeType !== 3) return this.formatNode(node)
 			if(node.nodeType === 3){
 				const textContent = node.textContent || ''
 
@@ -133,11 +134,13 @@ class DOMManipulator{
 
 						else {
 							lineCounter = 1
-							return final + '\r\n\r\n' + word + ' '
+							return final + '\r\n \r\n' + word + ' '
 						}
 
 					}
 				}, '')
+
+				htmlNode.setAttribute('style', 'white-space: pre-line !important;')
 			}
 		})
 
@@ -162,28 +165,30 @@ class DOMManipulator{
 	 */
 
 	observe (mutationList){
-		//REFACTORME: Use a better detection model
+		if(this.settings.enabled){
+			if(this.observationEnabled || window.location.href !== this.currentURL){
+				if(this.observationEnabled) this.toggleObservation()
 
-		if(this.observationEnabled || window.location.href !== this.currentURL){
-			if(this.observationEnabled) this.toggleObservation()
+				setTimeout(() => {
+					for(const mutation of mutationList){
+						//Updating the tracking list will get the latest result regardless of current index in the iteration loop.
 
-			setTimeout(() => {
-				for(const mutation of mutationList){
-					//Updating the tracking list will get the latest result regardless of current index in the iteration loop.
+						if(mutation.type === 'childList') {
 
-					if(mutation.type === 'childList') {
+							this.setState({
+								...this.state,
+								trackedElements: this.getNewTrackingList()
+							})
 
-						this.setState({
-							...this.state,
-							trackedElements: this.getNewTrackingList()
-						})
+							this.reformatDOM()
 
-						this.reformatDOM()
-
-						break
+							break
+						}
 					}
-				}
-			}, 2000) // scans the dom after 2 second of detecting mutation. This is to avoid wasted scans.
+				}, 2000) // scans the dom after 2 second of detecting mutation. This is to avoid wasted scans.
+			}
+			//REFACTORME: Use a better detection model
+
 
 		}
 	}
@@ -195,11 +200,15 @@ class DOMManipulator{
 
 	getNewTrackingList (){
 		if(window.location.href === this.currentURL){
+
 			return Array
 				.from(document.querySelectorAll('p'))
 				.slice(this.state.trackedElements.length)
 		}
-		else return Array.from(document.querySelectorAll('p'))
+		else {
+			this.currentURL = window.location.href
+			return Array.from(document.querySelectorAll('p'))
+		}
 	}
 
 	/**
@@ -254,12 +263,24 @@ class DOMManipulator{
  * @see {@link scanDOM}
  */
 function start (){
+
 	setTimeout(async () => {
-
 		const options = await browser.storage.local.get()
-		const mod = new DOMManipulator(options)
 
-		if(options.autoScan) mod.scanDOM()
+		if(options.enabled){
+			const mod = new DOMManipulator(options)
+
+			if(options.autoScan) mod.scanDOM()
+
+			window.addEventListener('keypress', () => {
+				mod.settings.enabled = false
+
+				setTimeout(() => {
+					mod.settings.enabled = true
+				}, 5000)
+			})
+		}
+
 
 	}, 3000)
 }
@@ -275,7 +296,7 @@ function parseAndAttachCSS (settings){
 	const newStylesheet = document.createElement('style')
 	newStylesheet.type = 'text/css'
 
-	newStylesheet.innerHTML = '.ally-reads_improved_reading{\n'
+	newStylesheet.innerHTML = '.ally-reads_improved_reading, .ally-reads_improved_reading *{\n'
 
 	for(const key in style){
 		if(style[key] > 0) newStylesheet.innerHTML += `${key}: ${style[key]}${styleUnits[key]} !important;\n`

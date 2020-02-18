@@ -14,8 +14,8 @@
 			],
 			"menu": [
 				{
-					"title": "Download Ally Read!",
-					"link": "https://kl13nt.github.io/ally-reads/web-ext-artifacts/allyreads-1.0.4-an+fx.xpi"
+					"title": "Download Ally Reads!",
+					"link": "https://kl13nt.github.io/ally-reads/web-ext-artifacts/allyreads-1.0.6-an+fx.xpi"
 				},
 				{
 					"title": "Github",
@@ -23,7 +23,7 @@
 					"target": "_blank"
 				}
 			],
-			"footer": "alpha@1.0.0"
+			"footer": "alpha@1.0"
 		},
 		"readme": "./README.md",
 		"template": "node_modules/clean-jsdoc-theme"

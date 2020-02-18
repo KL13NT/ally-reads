@@ -2,9 +2,9 @@
   "manifest_version": 2,
   "name": "Ally Reads!",
   "description": "An accessibility suite giving you control over what you read.",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "icons": {
-    "64": "./src/icons/icon.png"
+    "64": "./dist/icons/icon.png"
 	},
 	"applications": {
 		"gecko": {
@@ -22,19 +22,19 @@
         "*://*/*"
       ],
       "js": [
-        "./src/content_script.js"
+        "./dist/content_script.js"
       ]
     }
 	],
 	"background": {
-		"scripts": ["./src/installation.js", "./src/toggler.js"]
+		"scripts": ["./dist/installation.js", "./dist/toggler.js"]
 	},
   "browser_action": {
     "default_icon": {
-      "64": "./src/icons/icon.png"
+      "64": "./dist/icons/icon.png"
     }
 	},
   "options_ui": {
-    "page": "./src/options/index.html"
+    "page": "./dist/optionsUI/index.html"
   }
 }

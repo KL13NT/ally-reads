@@ -1,21 +1,28 @@
+/*eslint-env browser */
+/*global browser */
+
 const selectors = document.querySelectorAll('.c-input--range')
 const checks = document.querySelectorAll('.c-input--check')
+const numbers = document.querySelectorAll('.c-input--number')
 const textSample = document.querySelector('#text-sample')
 /**
  * Updates selector values
  * @param {HTMLElement} selector
  * @param {object} storage destructured storage data
  */
-function updateSelectorValue(selector, { style, styleUnits, ...settings }){
-	if(determineNodeType(selector.children[1])) selector.children[1].checked = settings[selector.children[1].name]
-	selector.children[1].value = style[selector.children[1].name]
+function updateSelectorValue (selector, { style, ...settings }){
+	const [ , childSelector ] = selector.children
+
+	if(childSelector.type === 'checkbox') childSelector.checked = settings[childSelector.name]
+	else if(childSelector.type === 'number') childSelector.value = settings[childSelector.name]
+	else childSelector.value = style[childSelector.name]
 }
 
 /**
  * Sets defaults upon settings page load
  * @param {object} storage
  */
-function updateVisualDefaults(storage){
+function updateVisualDefaults (storage){
 	selectors.forEach(element => {
 		updateSelectorValue(element, storage)
 		updateValueDisplay(element)
@@ -27,41 +34,46 @@ function updateVisualDefaults(storage){
 		updateValueDisplay(element)
 		updatePreview(storage)
 	})
+
+	numbers.forEach(element => {
+		updateSelectorValue(element, storage)
+		updateValueDisplay(element)
+		updatePreview(storage)
+	})
 }
 
-/**
- * returns true if checkbox
- * @param {HTMLElement} node
- * @returns {boolean} indicating if type is checkbox
- */
-function determineNodeType(node){
-	//REFACTORME: perhaps directly use type instead?
-	return node.type === 'checkbox'
-}
 
 /**
  * Updates StorageArea with new settings
  * @async
  * @param {HTMLElement} updatedSelector element which value has changed
  */
-async function updateStorage(updatedSelector){
-	const selector = updatedSelector.children[1]
+async function updateStorage (updatedSelector){
+	const [ , selector ] = updatedSelector.children
+	// eslint-disable-next-line prefer-destructuring
 	const { value, checked, name } = updatedSelector.children[1]
 
 	const oldStorage = await browser.storage.local.get()
 
-	if(determineNodeType(selector))
+	if(selector.type === 'checkbox')
 		await browser.storage.local.set({
 			...oldStorage,
 			[name]: checked
 		})
 
-	else await browser.storage.local.set({
-		...oldStorage,
-		style: {
-			...oldStorage.style, [name]: value
-		}
-	})
+	else if(selector.type === 'number')
+		await browser.storage.local.set({
+			...oldStorage,
+			[name]: value
+		})
+
+	else if(selector.type === 'range')
+		await browser.storage.local.set({
+			...oldStorage,
+			style: {
+				...oldStorage.style, [name]: value
+			}
+		})
 
 	updatePreview(await browser.storage.local.get())
 }
@@ -71,12 +83,12 @@ async function updateStorage(updatedSelector){
  * Updates the value textual display next to range selectors
  * @param {HTMLElement} selector
  */
-function updateValueDisplay(selector){
+function updateValueDisplay (selector){
 	const [ , range, valueDisplay ] = selector.children
 	const { value, name } = range
 
-	browser.storage.local.get().then(({ styleUnits })=> {
-		if(selector.children[2]) valueDisplay.textContent = `${value}${styleUnits[name]}`
+	browser.storage.local.get().then(({ styleUnits }) => {
+		if(selector.children[2]) valueDisplay.textContent = `${value}${styleUnits[name] || ''}`
 	})
 }
 
@@ -84,20 +96,28 @@ function updateValueDisplay(selector){
 /**
  * Watches selectors for changes
  */
-function watchSelector(){
+function watchSelector (){
 	selectors.forEach(element => {
-		element.children[1].addEventListener('input', (e)=>{
-			updateValueDisplay(element, e)
+		element.children[1].addEventListener('input', () => {
+			updateValueDisplay(element)
 		})
 
-		element.children[1].addEventListener('change', (e)=>{
+		element.children[1].addEventListener('change', () => {
 			updateStorage(element)
 		})
 	})
 
 	checks.forEach(element => {
-		element.children[1].addEventListener('change', async (e)=>{
+		element.children[1].addEventListener('change', async () => {
 			updateStorage(element)
+		})
+	})
+
+
+	numbers.forEach(element => {
+		element.children[1].addEventListener('input', async () => {
+			updateStorage(element)
+			updateValueDisplay(element)
 		})
 	})
 }
@@ -107,7 +127,7 @@ function watchSelector(){
  * Updates sample preview text in reaction to settings changes
  * @param {ExtensionSettings} settings
  */
-function updatePreview({ style, styleUnits }){
+function updatePreview ({ style, styleUnits }){
 	for(const key in style){
 		if(style[key] > 0) textSample.style[key] = `${style[key]}${styleUnits[key]}`
 	}
@@ -115,11 +135,11 @@ function updatePreview({ style, styleUnits }){
 
 
 
-window.addEventListener('load', async ()=>{
+window.addEventListener('load', async () => {
 	const settings = await browser.storage.local.get()
 
 	if(typeof settings.style === 'object' && typeof settings.styleEnable === 'boolean'){
 		updateVisualDefaults(settings)
 		watchSelector()
 	}
-})
+})	
