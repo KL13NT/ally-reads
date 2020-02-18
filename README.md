@@ -61,6 +61,7 @@ Commits follow a schema that's defined as `[<type>] <commit_message>`, where `<t
 - `Docs`: Documentation updates
 - `Config`: Configuration changes
 - `Amend`: Fixing older commits and/or rebasing them
+- `Refactor`: Self-explanatory
 
 All commits are on `develop` branch by default and new releases are then PR'ed into `master` which in turn starts the CI stages:
 1. `lint`
