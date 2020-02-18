@@ -54,7 +54,28 @@ I love contributing to OSS! And would love contributions to this repo. If you ha
 
 
 ## Lifecycle
-I develop features and fix bugs and push them to `develop`, when it's time to release completely I push to `master`. Documentation is updated every time there's a new build.
+Commits follow a schema that's defined as `[<type>] <commit_message>`, where `<type>` is one of:
+- `Bug`: Bug fixes and commits related to them
+- `Feature`: Feature updates and incremental additions
+- `Docs`: Documentation updates
+- `Config`: Configuration changes
+- `Amend`: Fixing older commits and/or rebasing them
+
+All commits are on `develop` branch by default and new releases are then PR'ed into `master` which in turn starts the CI stages:
+1. `lint`
+2. `test`
+3. if both previous passed, `build`
+4. if `build` passed, generate new `docs`
+5. deploy to gh-pages branch
+
+> You're well advised to make sure tests and linting pass on your machine locally before pushing.
+
+I use TravisCI and the configuration is based on some important env variables:
+- `API_KEY`: Mozilla addon api key
+- `API_SECRET`: Mozilla addon api secret
+- `GITHUB_ACCESS_TOKEN`: Access token for GitHub account to enable Travis to push and control the flow of the repo.
+
+> Starting with v1.0.6, the repo is using semver for versioning as well as the rules introduced earlier regarding commit messages.
 
 ## Upcoming Features
 - **Format any element**: In this, you will be able to format any element as easy as clicking your mouse.
@@ -70,7 +91,9 @@ I develop features and fix bugs and push them to `develop`, when it's time to re
 - **Change settings on the fly**: Allows you to change extension settings without going to addon-settings.
 
 ## Testing
-Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in `content_script.js`.
+~~Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in `content_script.js`.~~
+
+Testing is now possible and easy since I introduced Webpack to the codebase. It now handles building parallel to web-ext where Webpack bundles the JS modules needed and stores them in `dist/` and web-ext hot-loads the extension and all needed config.
 
 ## Known Bugs
 - **Social media and text modifications** *#004* *Fixed*: Text modifications such as writing a facebook post or a tweet will cause the extension to query the DOM on every few key strokes. This is because of the behaviour of the MutationObserver API. A possible fix for it could be to detect keyboard events and/or check the type of element the user is updating (i.e. text area, input field, etc.)
