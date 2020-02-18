@@ -48,7 +48,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html"><div class="text">Ally Reads!</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://kl13nt.github.io/ally-reads/web-ext-artifacts/allyreads-1.0.6-an+fx.xpi' class='' id='' target=''>Download Ally Reads!</a></li><li><a href='https://github.com/KL13NT/ally-reads' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="DOMManipulator.html">DOMManipulator</a><ul class='methods'><li data-type='method'><a href="DOMManipulator.html#formatNode">formatNode</a></li><li data-type='method'><a href="DOMManipulator.html#getNewTrackingList">getNewTrackingList</a></li><li data-type='method'><a href="DOMManipulator.html#observe">observe</a></li><li data-type='method'><a href="DOMManipulator.html#reformatDOM">reformatDOM</a></li><li data-type='method'><a href="DOMManipulator.html#scanDOM">scanDOM</a></li><li data-type='method'><a href="DOMManipulator.html#setState">setState</a></li><li data-type='method'><a href="DOMManipulator.html#shouldUpdate">shouldUpdate</a></li><li data-type='method'><a href="DOMManipulator.html#toggleObservation">toggleObservation</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#parseAndAttachCSS">parseAndAttachCSS</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#updatePreview">updatePreview</a></li><li><a href="global.html#updateSelectorValue">updateSelectorValue</a></li><li><a href="global.html#updateStorage">updateStorage</a></li><li><a href="global.html#updateValueDisplay">updateValueDisplay</a></li><li><a href="global.html#updateVisualDefaults">updateVisualDefaults</a></li><li><a href="global.html#watchSelector">watchSelector</a></li></ul></div>
+    <h2><a href="index.html"><div class="text">Ally Reads!</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://kl13nt.github.io/ally-reads/web-ext-artifacts/allyreads-1.0.6-an+fx.xpi' class='' id='' target=''>Download Ally Reads!</a></li><li><a href='https://github.com/KL13NT/ally-reads' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="DOMManipulator.html">DOMManipulator</a><ul class='methods'><li data-type='method'><a href="DOMManipulator.html#formatNode">formatNode</a></li><li data-type='method'><a href="DOMManipulator.html#getNewTrackingList">getNewTrackingList</a></li><li data-type='method'><a href="DOMManipulator.html#observe">observe</a></li><li data-type='method'><a href="DOMManipulator.html#reformatDOM">reformatDOM</a></li><li data-type='method'><a href="DOMManipulator.html#scanDOM">scanDOM</a></li><li data-type='method'><a href="DOMManipulator.html#setState">setState</a></li><li data-type='method'><a href="DOMManipulator.html#shouldUpdate">shouldUpdate</a></li><li data-type='method'><a href="DOMManipulator.html#toggleObservation">toggleObservation</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#getType">getType</a></li><li><a href="global.html#isObject">isObject</a></li><li><a href="global.html#parseAndAttachCSS">parseAndAttachCSS</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#updatePreview">updatePreview</a></li><li><a href="global.html#updateSelectorValue">updateSelectorValue</a></li><li><a href="global.html#updateStorage">updateStorage</a></li><li><a href="global.html#updateValueDisplay">updateValueDisplay</a></li><li><a href="global.html#updateVisualDefaults">updateVisualDefaults</a></li><li><a href="global.html#watchSelector">watchSelector</a></li></ul></div>
 </nav>
 
 <div id="main">
@@ -119,15 +119,16 @@
 <li><code>Docs</code>: Documentation updates</li>
 <li><code>Config</code>: Configuration changes</li>
 <li><code>Amend</code>: Fixing older commits and/or rebasing them</li>
+<li><code>Refactor</code>: Self-explanatory</li>
 </ul>
 <p>All commits are on <code>develop</code> branch by default and new releases are then PR'ed into <code>master</code> which in turn starts the CI stages:</p>
-<ol>
+<ul>
 <li><code>lint</code></li>
 <li><code>test</code></li>
 <li>if both previous passed, <code>build</code></li>
 <li>if <code>build</code> passed, generate new <code>docs</code></li>
 <li>deploy to gh-pages branch</li>
-</ol>
+</ul>
 <blockquote>
 <p>You're well advised to make sure tests and linting pass on your machine locally before pushing.</p>
 </blockquote>
@@ -175,17 +176,13 @@
 </ul>
 <h2>FAQ</h2>
 <p>Q. Is the extension free to use?</p>
-<pre><code>Yes. The extension is open-source and free to use. No hidden fees. I will not ask you to pay for anything.
-</code></pre>
+<p>Yes. The extension is open-source and free to use. No hidden fees. I will not ask you to pay for anything.</p>
 <p>Q. What browsers is this available for?</p>
-<pre><code>Firefox is the only browser supported as of now. There are currently no plans to port it to any Chromium-based browser.
-</code></pre>
+<p>Firefox is the only browser supported as of now. There are currently no plans to port it to any Chromium-based browser.</p>
 <p>Q. How can I report bugs?</p>
-<pre><code>If you're a developer and you know how to use GitHub issues, feel free to open a new issue on the repo. If you're not familiar with GitHub you can contact me personally. Contact info can be found at https://iamnabil.me
-</code></pre>
+<p>If you're a developer and you know how to use GitHub issues, feel free to open a new issue on the repo. If you're not familiar with GitHub you can contact me personally. Contact info can be found at https://iamnabil.me</p>
 <p>Q. Can I submit PR's any time?</p>
-<pre><code>I'd appreciate it if you open a PR after discussing the changes you'll be making in an issue first. This way you won't waste your time working on something that may not be needed or that may be in development.
-</code></pre>
+<p>I'd appreciate it if you open a PR after discussing the changes you'll be making in an issue first. This way you won't waste your time working on something that may not be needed or that may be in development.</p>
 <h2>Change Log</h2>
 <ul>
 <li>
@@ -263,7 +260,7 @@
 <script>prettyPrint();</script>
 <script src="scripts/linenumber.js"></script>
 <script>
-var list = [{"title":"DOMManipulator","link":"<a href=\"DOMManipulator.html\">DOMManipulator</a>"},{"title":"DOMManipulator#formatNode","link":"<a href=\"DOMManipulator.html#formatNode\">DOMManipulator &rtrif; formatNode</a>"},{"title":"DOMManipulator#getNewTrackingList","link":"<a href=\"DOMManipulator.html#getNewTrackingList\">DOMManipulator &rtrif; getNewTrackingList</a>"},{"title":"DOMManipulator#observe","link":"<a href=\"DOMManipulator.html#observe\">DOMManipulator &rtrif; observe</a>"},{"title":"DOMManipulator#reformatDOM","link":"<a href=\"DOMManipulator.html#reformatDOM\">DOMManipulator &rtrif; reformatDOM</a>"},{"title":"DOMManipulator#scanDOM","link":"<a href=\"DOMManipulator.html#scanDOM\">DOMManipulator &rtrif; scanDOM</a>"},{"title":"DOMManipulator#setState","link":"<a href=\"DOMManipulator.html#setState\">DOMManipulator &rtrif; setState</a>"},{"title":"DOMManipulator#shouldUpdate","link":"<a href=\"DOMManipulator.html#shouldUpdate\">DOMManipulator &rtrif; shouldUpdate</a>"},{"title":"DOMManipulator#toggleObservation","link":"<a href=\"DOMManipulator.html#toggleObservation\">DOMManipulator &rtrif; toggleObservation</a>"},{"title":"parseAndAttachCSS","link":"<a href=\"global.html#parseAndAttachCSS\">Global &rtrif; parseAndAttachCSS</a>"},{"title":"start","link":"<a href=\"global.html#start\">Global &rtrif; start</a>"},{"title":"updatePreview","link":"<a href=\"global.html#updatePreview\">Global &rtrif; updatePreview</a>"},{"title":"updateSelectorValue","link":"<a href=\"global.html#updateSelectorValue\">Global &rtrif; updateSelectorValue</a>"},{"title":"updateStorage","link":"<a href=\"global.html#updateStorage\">Global &rtrif; updateStorage</a>"},{"title":"updateValueDisplay","link":"<a href=\"global.html#updateValueDisplay\">Global &rtrif; updateValueDisplay</a>"},{"title":"updateVisualDefaults","link":"<a href=\"global.html#updateVisualDefaults\">Global &rtrif; updateVisualDefaults</a>"},{"title":"watchSelector","link":"<a href=\"global.html#watchSelector\">Global &rtrif; watchSelector</a>"}];
+var list = [{"title":"DOMManipulator","link":"<a href=\"DOMManipulator.html\">DOMManipulator</a>"},{"title":"DOMManipulator#formatNode","link":"<a href=\"DOMManipulator.html#formatNode\">DOMManipulator &rtrif; formatNode</a>"},{"title":"DOMManipulator#getNewTrackingList","link":"<a href=\"DOMManipulator.html#getNewTrackingList\">DOMManipulator &rtrif; getNewTrackingList</a>"},{"title":"DOMManipulator#observe","link":"<a href=\"DOMManipulator.html#observe\">DOMManipulator &rtrif; observe</a>"},{"title":"DOMManipulator#reformatDOM","link":"<a href=\"DOMManipulator.html#reformatDOM\">DOMManipulator &rtrif; reformatDOM</a>"},{"title":"DOMManipulator#scanDOM","link":"<a href=\"DOMManipulator.html#scanDOM\">DOMManipulator &rtrif; scanDOM</a>"},{"title":"DOMManipulator#setState","link":"<a href=\"DOMManipulator.html#setState\">DOMManipulator &rtrif; setState</a>"},{"title":"DOMManipulator#shouldUpdate","link":"<a href=\"DOMManipulator.html#shouldUpdate\">DOMManipulator &rtrif; shouldUpdate</a>"},{"title":"DOMManipulator#toggleObservation","link":"<a href=\"DOMManipulator.html#toggleObservation\">DOMManipulator &rtrif; toggleObservation</a>"},{"title":"getType","link":"<a href=\"global.html#getType\">Global &rtrif; getType</a>"},{"title":"isObject","link":"<a href=\"global.html#isObject\">Global &rtrif; isObject</a>"},{"title":"parseAndAttachCSS","link":"<a href=\"global.html#parseAndAttachCSS\">Global &rtrif; parseAndAttachCSS</a>"},{"title":"start","link":"<a href=\"global.html#start\">Global &rtrif; start</a>"},{"title":"updatePreview","link":"<a href=\"global.html#updatePreview\">Global &rtrif; updatePreview</a>"},{"title":"updateSelectorValue","link":"<a href=\"global.html#updateSelectorValue\">Global &rtrif; updateSelectorValue</a>"},{"title":"updateStorage","link":"<a href=\"global.html#updateStorage\">Global &rtrif; updateStorage</a>"},{"title":"updateValueDisplay","link":"<a href=\"global.html#updateValueDisplay\">Global &rtrif; updateValueDisplay</a>"},{"title":"updateVisualDefaults","link":"<a href=\"global.html#updateVisualDefaults\">Global &rtrif; updateVisualDefaults</a>"},{"title":"watchSelector","link":"<a href=\"global.html#watchSelector\">Global &rtrif; watchSelector</a>"}];
 setupSearch(list)
 </script>
 

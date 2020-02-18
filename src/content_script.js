@@ -1,81 +1,13 @@
 /* eslint-env browser, webextensions */
 
-/**
- * Extension settings custom schema
- * @typedef {Object} ExtensionSettings
- * @property {object} style defines style values
- * @property {number} style.font-size
- * @property {number} style.line-height
- * @property {number} style.letter-spacing
- * @property {number} style.word-spacing
- * @property {object} styleUnits defines style units
- * @property {string} styleUnits.font-size
- * @property {string} styleUnits.line-height
- * @property {string} styleUnits.letter-spacing
- * @property {string} styleUnits.word-spacing
- * @property {number} linesPerParagraph lines per paragraph
- * @property {number} wordsPerLine words per line
- * @property {boolean} autoScan auto scan page for p tags
- * @property {boolean} styleEnable enables style modifications
- * @property {boolean} DOMEnable enables dom modifications
- */
-
-/**
- * Extension settings custom schema
- * @typedef {array} MutationList
- * @property {MutationRecord} MutationRecord defines style values
- */
+import './types.d'
+import { ExtensionSettings } from './content/options'
 
 
-const OptionsSchema = {
-	schema: {
-		style: {
-			'font-size': 16,
-			'line-height': 0,
-			'letter-spacing': 0,
-			'word-spacing': 0
-		},
-		styleUnits: {
-			'font-size': 'px',
-			'line-height': '',
-			'letter-spacing': 'px',
-			'word-spacing': 'px'
-		},
 
-		linesPerParagraph: 3,
-		wordsPerLine: 8,
-
-		autoScan: true,
-		styleEnable: true,
-		DOMEnable: true,
-		enabled: true
-	},
-
-	/**
-	 * Enforces a schema for the extension's settings
-	 * @param {ExtensionSettings} settings Settings object
-	 */
-	verifySchema: function ({ style, styleUnits, ...pluginSettings }){
-		const { style: schemaStyle, styleUnits: schemaStyleUnits, ...schemaSettings } = this.schema
-
-		try{
-			if(
-				Object.keys(style).length !== Object.keys(schemaStyle).length
-				|| Object.keys(styleUnits).length !== Object.keys(schemaStyleUnits).length
-				|| Object.keys(pluginSettings).length !== Object.keys(schemaSettings).length
-			) return false
-
-			return true
-		}
-		catch(err){
-			return false
-		}
-	}
-}
 
 /**
  * @property {boolean} observationEnabled
- * @property {ExtensionSettings} settings
  * @property {ExtensionSettings} settings
  */
 class DOMManipulator{
@@ -87,10 +19,8 @@ class DOMManipulator{
 			trackedElements: []
 		}
 
-		if(!OptionsSchema.verifySchema(settings))
-			throw Error ('Settings passed to DOMManipulator does not match schema')
+		this.settings = new ExtensionSettings(settings)
 
-		this.settings = { ...settings }
 		this.observationEnabled = false
 		this.currentURL = null
 
@@ -161,7 +91,7 @@ class DOMManipulator{
 	//BUG: the observer catches modifications made by the extension itself.
 	/**
 	 * Observation handler
-	 * @param {array} mutationList - Array of MutationRecord's
+	 * @param {MutationList} mutationList - Array of MutationRecord's
 	 */
 
 	observe (mutationList){
@@ -195,7 +125,7 @@ class DOMManipulator{
 
 	/**
 	 * Gets the new tracking list based on whether it's the same page
-	 * @returns {array} array of HTMLElement
+	 * @returns {HTMLElement[]} array of HTMLElement
 	 */
 
 	getNewTrackingList (){
@@ -249,7 +179,7 @@ class DOMManipulator{
 
 	/**
 	 * Defers and updates state
-	 * @param {array} newTrackingList A new list of <p> tags
+	 * @param {HTMLElement[]} newTrackingList A new list of <p> tags
 	 */
 	setState (nextState){
 		if(this.shouldUpdate(nextState)){

@@ -64,11 +64,11 @@ Commits follow a schema that's defined as `[<type>] <commit_message>`, where `<t
 - `Refactor`: Self-explanatory
 
 All commits are on `develop` branch by default and new releases are then PR'ed into `master` which in turn starts the CI stages:
-1. `lint`
-2. `test`
-3. if both previous passed, `build`
-4. if `build` passed, generate new `docs`
-5. deploy to gh-pages branch
+- `lint`
+- `test`
+- if both previous passed, `build`
+- if `build` passed, generate new `docs`
+- deploy to gh-pages branch
 
 > You're well advised to make sure tests and linting pass on your machine locally before pushing.
 
@@ -105,19 +105,19 @@ Testing is now possible and easy since I introduced Webpack to the codebase. It 
 ## FAQ
 Q. Is the extension free to use?
 
-	Yes. The extension is open-source and free to use. No hidden fees. I will not ask you to pay for anything.
+Yes. The extension is open-source and free to use. No hidden fees. I will not ask you to pay for anything.
 
 Q. What browsers is this available for?
 
-	Firefox is the only browser supported as of now. There are currently no plans to port it to any Chromium-based browser.
+Firefox is the only browser supported as of now. There are currently no plans to port it to any Chromium-based browser.
 
 Q. How can I report bugs?
 
-	If you're a developer and you know how to use GitHub issues, feel free to open a new issue on the repo. If you're not familiar with GitHub you can contact me personally. Contact info can be found at https://iamnabil.me
+If you're a developer and you know how to use GitHub issues, feel free to open a new issue on the repo. If you're not familiar with GitHub you can contact me personally. Contact info can be found at https://iamnabil.me
 
 Q. Can I submit PR's any time?
 
-	I'd appreciate it if you open a PR after discussing the changes you'll be making in an issue first. This way you won't waste your time working on something that may not be needed or that may be in development.
+I'd appreciate it if you open a PR after discussing the changes you'll be making in an issue first. This way you won't waste your time working on something that may not be needed or that may be in development.
 
 ## Change Log
 
