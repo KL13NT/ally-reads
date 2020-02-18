@@ -1,9 +1,9 @@
 module.exports = {
 	'env': {
-		'browser': false,
+		'browser': true,
 		'commonjs': true,
 		'es6': true,
-		'node': true
+		'node': false
 	},
 	"extends": [
 		"eslint:recommended"
@@ -12,7 +12,7 @@ module.exports = {
 	'parserOptions': {
 		'ecmaVersion': 10,
 		'ecmaFeatures': {
-			'jsx': true,
+			'jsx': false,
 			'modules': true,
 			'experimentalObjectRestSpread': true
 		}
@@ -22,7 +22,7 @@ module.exports = {
 	'rules': {
 		'indent': [
 			'error',
-			`tab`
+			'tab'
 		],
 		'linebreak-style': [
 			'error',
@@ -68,8 +68,8 @@ module.exports = {
 						"=": true
           }
     }],
-		"prefer-destructuring": ["warn", {
-      "array": false,
+		"prefer-destructuring": ["error", {
+      "array": true,
       "object": true
 			}, {
       "enforceForRenamedProperties": false

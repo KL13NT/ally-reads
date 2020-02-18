@@ -49,7 +49,8 @@ function updateVisualDefaults (storage){
  * @param {HTMLElement} updatedSelector element which value has changed
  */
 async function updateStorage (updatedSelector){
-	const selector = updatedSelector.children[1]
+	const [ , selector ] = updatedSelector.children
+	// eslint-disable-next-line prefer-destructuring
 	const { value, checked, name } = updatedSelector.children[1]
 
 	const oldStorage = await browser.storage.local.get()
@@ -141,4 +142,4 @@ window.addEventListener('load', async () => {
 		updateVisualDefaults(settings)
 		watchSelector()
 	}
-})
+})	
