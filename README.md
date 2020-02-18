@@ -31,6 +31,7 @@ An accessibility suite giving you control over what you read.
 - [Upcoming Features](#Upcoming-Features)
 - [Testing](#Testing)
 - [Known Bugs](#Known-Bugs)
+- [FAQ](#FAQ)
 - [Change Log](#Change-Log)
 - [License](#License)
 
@@ -99,6 +100,23 @@ Testing is now possible and easy since I introduced Webpack to the codebase. It 
 - **Social media and text modifications** *#004* *Fixed*: Text modifications such as writing a facebook post or a tweet will cause the extension to query the DOM on every few key strokes. This is because of the behaviour of the MutationObserver API. A possible fix for it could be to detect keyboard events and/or check the type of element the user is updating (i.e. text area, input field, etc.)
 
 - **Broken links** *#003* *Fixed*: The extension uses a very basic approach to replace `<p>` tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.
+
+## FAQ
+Q. Is the extension free to use?
+
+	Yes. The extension is open-source and free to use. No hidden fees. I will not ask you to pay for anything.
+
+Q. What browsers is this available for?
+
+	Firefox is the only browser supported as of now. There are currently no plans to port it to any Chromium-based browser.
+
+Q. How can I report bugs?
+
+	If you're a developer and you know how to use GitHub issues, feel free to open a new issue on the repo. If you're not familiar with GitHub you can contact me personally. Contact info can be found at https://iamnabil.me
+
+Q. Can I submit PR's any time?
+
+	I'd appreciate it if you open a PR after discussing the changes you'll be making in an issue first. This way you won't waste your time working on something that may not be needed or that may be in development.
 
 ## Change Log
 

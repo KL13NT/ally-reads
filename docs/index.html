@@ -94,6 +94,7 @@
 <li><a href="#Upcoming-Features">Upcoming Features</a></li>
 <li><a href="#Testing">Testing</a></li>
 <li><a href="#Known-Bugs">Known Bugs</a></li>
+<li><a href="#FAQ">FAQ</a></li>
 <li><a href="#Change-Log">Change Log</a></li>
 <li><a href="#License">License</a></li>
 </ul>
@@ -111,14 +112,34 @@
 <h2>Contributing</h2>
 <p>I love contributing to OSS! And would love contributions to this repo. If you have a feature request, bug report, or have coded a new feature you can open an issue/PR/contact me anywhere and tell me all about it. If you have suggestions regarding cleaning up this codebase also feel free to tell me. I'd love to hear others' opinions on this.</p>
 <h2>Lifecycle</h2>
-<p>I develop features and fix bugs and push them to <code>develop</code>, when it's time to release completely I push to <code>master</code>. Documentation is updated every time there's a new build. Commits follow the following criteria:</p>
+<p>Commits follow a schema that's defined as <code>[&lt;type&gt;] &lt;commit_message&gt;</code>, where <code>&lt;type&gt;</code> is one of:</p>
 <ul>
-<li><code>[Config]</code>: For codebase configuration changes</li>
-<li><code>[Docs]</code>: For documentation changes</li>
-<li><code>[Feature]</code>: For new feature updates</li>
-<li><code>[Bug]</code>: For bug fixes</li>
+<li><code>Bug</code>: Bug fixes and commits related to them</li>
+<li><code>Feature</code>: Feature updates and incremental additions</li>
+<li><code>Docs</code>: Documentation updates</li>
+<li><code>Config</code>: Configuration changes</li>
+<li><code>Amend</code>: Fixing older commits and/or rebasing them</li>
 </ul>
-<p>Feature and Bug commits often trigger version upgrades.</p>
+<p>All commits are on <code>develop</code> branch by default and new releases are then PR'ed into <code>master</code> which in turn starts the CI stages:</p>
+<ol>
+<li><code>lint</code></li>
+<li><code>test</code></li>
+<li>if both previous passed, <code>build</code></li>
+<li>if <code>build</code> passed, generate new <code>docs</code></li>
+<li>deploy to gh-pages branch</li>
+</ol>
+<blockquote>
+<p>You're well advised to make sure tests and linting pass on your machine locally before pushing.</p>
+</blockquote>
+<p>I use TravisCI and the configuration is based on some important env variables:</p>
+<ul>
+<li><code>API_KEY</code>: Mozilla addon api key</li>
+<li><code>API_SECRET</code>: Mozilla addon api secret</li>
+<li><code>GITHUB_ACCESS_TOKEN</code>: Access token for GitHub account to enable Travis to push and control the flow of the repo.</li>
+</ul>
+<blockquote>
+<p>Starting with v1.0.6, the repo is using semver for versioning as well as the rules introduced earlier regarding commit messages.</p>
+</blockquote>
 <h2>Upcoming Features</h2>
 <ul>
 <li>
@@ -141,7 +162,8 @@
 </li>
 </ul>
 <h2>Testing</h2>
-<p>Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in <code>content_script.js</code>.</p>
+<p><s>Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in <code>content_script.js</code>.</s></p>
+<p>Testing is now possible and easy since I introduced Webpack to the codebase. It now handles building parallel to web-ext where Webpack bundles the JS modules needed and stores them in <code>dist/</code> and web-ext hot-loads the extension and all needed config.</p>
 <h2>Known Bugs</h2>
 <ul>
 <li>
@@ -151,6 +173,19 @@
 <p><strong>Broken links</strong> <em>#003</em> <em>Fixed</em>: The extension uses a very basic approach to replace <code>&lt;p&gt;</code> tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.</p>
 </li>
 </ul>
+<h2>FAQ</h2>
+<p>Q. Is the extension free to use?</p>
+<pre><code>Yes. The extension is open-source and free to use. No hidden fees. I will not ask you to pay for anything.
+</code></pre>
+<p>Q. What browsers is this available for?</p>
+<pre><code>Firefox is the only browser supported as of now. There are currently no plans to port it to any Chromium-based browser.
+</code></pre>
+<p>Q. How can I report bugs?</p>
+<pre><code>If you're a developer and you know how to use GitHub issues, feel free to open a new issue on the repo. If you're not familiar with GitHub you can contact me personally. Contact info can be found at https://iamnabil.me
+</code></pre>
+<p>Q. Can I submit PR's any time?</p>
+<pre><code>I'd appreciate it if you open a PR after discussing the changes you'll be making in an issue first. This way you won't waste your time working on something that may not be needed or that may be in development.
+</code></pre>
 <h2>Change Log</h2>
 <ul>
 <li>

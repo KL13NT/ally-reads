@@ -7,10 +7,8 @@
   "author": "Nabil <nabil.tharwat@outlook.com>",
   "license": "GPL-3.0-only",
   "scripts": {
-		"run:firefox": "yarn web-ext run --verbose --target firefox-desktop",
-    "run:chrome": "yarn web-ext run --verbose --target chromium",
-    "develop:firefox": "run-p watch run:firefox",
-    "develop:chrome": "run-p watch run:chrome",
+		"run": "yarn web-ext run --verbose --target firefox-desktop",
+    "develop": "run-p watch run",
     "watch": "webpack --watch --mode production --config webpack.config.js",
     "prebuild": "webpack --mode production --config webpack.config.js",
     "build": "yarn web-ext build -a ./docs/web-ext-artifacts --overwrite-dest",
