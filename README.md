@@ -109,5 +109,3 @@ Unit Testing WebExtensions is such a pain that I decided not to cover the whole 
 
 ## Licence
 This repo is licensed under the GNU GENERAL PUBLIC LICENSE v3. This means you can use it commercially and privately, redistribute, and modify all while using the same licence and after stating the changes you made, as well as disclosing the source, which is this repo, or me personally. This licence doesn't guarantee liability or warranty of any kind. Use at will.
-
-Find the full licence [here](../license)
