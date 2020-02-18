@@ -46,7 +46,16 @@ I love contributing to OSS! And would love contributions to this repo. If you ha
 Please follow the formatting rules in the eslint config file. I'll be writing tests soon.
 
 ## Lifecycle
-I develop features and fix bugs and push them to `develop`, when it's time to release completely I push to `master`. Documentation is updated every time there's a new build.
+I develop features and fix bugs and push them to `develop`, when it's time to release completely I push to `master`. Documentation is updated every time there's a new build. Commits follow the following criteria:
+
+- `[Config]`: For codebase configuration changes
+- `[Docs]`: For documentation changes
+- `[Feature]`: For new feature updates
+- `[Bug]`: For bug fixes
+
+The commit is then pulled by TravisCI and tested using Jest. Upon confirmation the new build is going to deploy to gh-pages with the new release.
+
+Feature and Bug commits often trigger version upgrades. To skip builds and not deploy specific commits use the form `[<type>][skip travis] <commit message>` where `<type>` is one of the mentioned above.
 
 ## Upcoming Features
 - **Format any element**: In this, you will be able to format any element as easy as clicking your mouse.
@@ -62,7 +71,9 @@ I develop features and fix bugs and push them to `develop`, when it's time to re
 - **Change settings on the fly**: Allows you to change extension settings without going to addon-settings.
 
 ## Testing
-Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in `content_script.js`.
+~~Unit Testing WebExtensions is such a pain that I decided not to cover the whole extension. I have written unit tests for critical logic. Before testing make sure to uncomment the export line in `content_script.js`.~~
+
+Testing is now way easier and better since I introduced Webpack to the codebase. Now modules work properly while maintaining the availability of the extension build.
 
 ## Known Bugs
 - **Broken links** *#003* *Fixed*: The extension uses a very basic approach to replace `<p>` tags textContent. This causes any inner elements to be broken down and replaced with only the string value of textContent. I'll be looking into this and will probably replace it with something more advanced like an HTML parses for instance. This will allow me to differ between nested elements and modify text nodes only.

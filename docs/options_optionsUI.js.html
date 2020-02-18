@@ -109,8 +109,14 @@ function determineNodeType(node){
  * @async
  * @param {HTMLElement} updatedSelector element which value has changed
  */
+<<<<<<< Updated upstream
 async function updateStorage(updatedSelector){
 	const selector = updatedSelector.children[1]
+=======
+async function updateStorage (updatedSelector){
+	const [ , selector ] = updatedSelector.children
+	// eslint-disable-next-line prefer-destructuring
+>>>>>>> Stashed changes
 	const { value, checked, name } = updatedSelector.children[1]
 
 	const oldStorage = await browser.storage.local.get()
@@ -187,7 +193,7 @@ window.addEventListener('load', async ()=>{
 		updateVisualDefaults(settings)
 		watchSelector()
 	}
-})</code></pre>
+})	</code></pre>
         </article>
     </section>
 
