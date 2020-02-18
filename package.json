@@ -9,8 +9,8 @@
   "scripts": {
     "develop:ext": "yarn web-ext run --verbose",
     "develop:webpack": "webpack --watch --mode production --config webpack.config.js",
-    "prebuild": "yarn docs",
-    "build": " yarn web-ext build -a ./docs/web-ext-artifacts --overwrite-dest",
+    "prebuild": "webpack --mode production --config webpack.config.js",
+    "build": "yarn web-ext build -a ./docs/web-ext-artifacts --overwrite-dest",
     "web-ext": "node \"./node_modules/web-ext/bin/web-ext\"",
     "test": "jest --colors --expand --logHeapUsage --config jest.config.js --verbose",
     "docs": "./node_modules/.bin/jsdoc -c ./jsdoc.json -r ./ -d docs"
