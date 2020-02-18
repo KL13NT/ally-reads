@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+      
+        <meta name="author" content="Nabil Tharwat">
+      
+        <meta name="description" content="Control what you read">
+      
+    
+    <title>options/optionsUI.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/search.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.5/fuse.min.js"></script> -->
+    <script src="scripts/fuse.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme.css">
+    
+    
+    
+<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z"/>
+                <path d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z"/>
+            </g>
+        </symbol>
+    </defs>
+</svg>
+
+</head>
+<body>
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html"><div class="text">Ally Reads!</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://kl13nt.github.io/ally-reads/index.html' class='' id='' target=''>Ally Reads!</a></li><li><a href='https://github.com/KL13NT/ally-reads' class='' id='' target='_blank'>Github</a></li></ul><h3>Classes</h3><ul><li><a href="DOMManipulator.html">DOMManipulator</a><ul class='methods'><li data-type='method'><a href="DOMManipulator.html#formatNode">formatNode</a></li><li data-type='method'><a href="DOMManipulator.html#getNewTrackingList">getNewTrackingList</a></li><li data-type='method'><a href="DOMManipulator.html#observe">observe</a></li><li data-type='method'><a href="DOMManipulator.html#reformatDOM">reformatDOM</a></li><li data-type='method'><a href="DOMManipulator.html#scanDOM">scanDOM</a></li><li data-type='method'><a href="DOMManipulator.html#setState">setState</a></li><li data-type='method'><a href="DOMManipulator.html#shouldUpdate">shouldUpdate</a></li><li data-type='method'><a href="DOMManipulator.html#toggleObservation">toggleObservation</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#determineNodeType">determineNodeType</a></li><li><a href="global.html#parseAndAttachCSS">parseAndAttachCSS</a></li><li><a href="global.html#start">start</a></li><li><a href="global.html#updatePreview">updatePreview</a></li><li><a href="global.html#updateSelectorValue">updateSelectorValue</a></li><li><a href="global.html#updateStorage">updateStorage</a></li><li><a href="global.html#updateValueDisplay">updateValueDisplay</a></li><li><a href="global.html#updateVisualDefaults">updateVisualDefaults</a></li><li><a href="global.html#watchSelector">watchSelector</a></li></ul></div>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">options/optionsUI.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const selectors = document.querySelectorAll('.c-input--range')
+const checks = document.querySelectorAll('.c-input--check')
+const textSample = document.querySelector('#text-sample')
+/**
+ * Updates selector values
+ * @param {HTMLElement} selector
+ * @param {object} storage destructured storage data
+ */
+function updateSelectorValue(selector, { style, styleUnits, ...settings }){
+	if(determineNodeType(selector.children[1])) selector.children[1].checked = settings[selector.children[1].name]
+	selector.children[1].value = style[selector.children[1].name]
+}
+
+/**
+ * Sets defaults upon settings page load
+ * @param {object} storage
+ */
+function updateVisualDefaults(storage){
+	selectors.forEach(element => {
+		updateSelectorValue(element, storage)
+		updateValueDisplay(element)
+		updatePreview(storage)
+	})
+
+	checks.forEach(element => {
+		updateSelectorValue(element, storage)
+		updateValueDisplay(element)
+		updatePreview(storage)
+	})
+}
+
+/**
+ * returns true if checkbox
+ * @param {HTMLElement} node
+ * @returns {boolean} indicating if type is checkbox
+ */
+function determineNodeType(node){
+	//REFACTORME: perhaps directly use type instead?
+	return node.type === 'checkbox'
+}
+
+/**
+ * Updates StorageArea with new settings
+ * @async
+ * @param {HTMLElement} updatedSelector element which value has changed
+ */
+async function updateStorage(updatedSelector){
+	const selector = updatedSelector.children[1]
+	const { value, checked, name } = updatedSelector.children[1]
+
+	const oldStorage = await browser.storage.local.get()
+
+	if(determineNodeType(selector))
+		await browser.storage.local.set({
+			...oldStorage,
+			[name]: checked
+		})
+
+	else await browser.storage.local.set({
+		...oldStorage,
+		style: {
+			...oldStorage.style, [name]: value
+		}
+	})
+
+	updatePreview(await browser.storage.local.get())
+}
+
+
+/**
+ * Updates the value textual display next to range selectors
+ * @param {HTMLElement} selector
+ */
+function updateValueDisplay(selector){
+	const [ , range, valueDisplay ] = selector.children
+	const { value, name } = range
+
+	browser.storage.local.get().then(({ styleUnits })=> {
+		if(selector.children[2]) valueDisplay.textContent = `${value}${styleUnits[name]}`
+	})
+}
+
+
+/**
+ * Watches selectors for changes
+ */
+function watchSelector(){
+	selectors.forEach(element => {
+		element.children[1].addEventListener('input', (e)=>{
+			updateValueDisplay(element, e)
+		})
+
+		element.children[1].addEventListener('change', (e)=>{
+			updateStorage(element)
+		})
+	})
+
+	checks.forEach(element => {
+		element.children[1].addEventListener('change', async (e)=>{
+			updateStorage(element)
+		})
+	})
+}
+
+
+/**
+ * Updates sample preview text in reaction to settings changes
+ * @param {ExtensionSettings} settings
+ */
+function updatePreview({ style, styleUnits }){
+	for(const key in style){
+		if(style[key] > 0) textSample.style[key] = `${style[key]}${styleUnits[key]}`
+	}
+}
+
+
+
+window.addEventListener('load', async ()=>{
+	const settings = await browser.storage.local.get()
+
+	if(typeof settings.style === 'object' &amp;&amp; typeof settings.styleEnable === 'boolean'){
+		updateVisualDefaults(settings)
+		watchSelector()
+	}
+})</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+  alpha@1.0.0
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script>
+var list = [{"title":"DOMManipulator","link":"<a href=\"DOMManipulator.html\">DOMManipulator</a>"},{"title":"DOMManipulator#formatNode","link":"<a href=\"DOMManipulator.html#formatNode\">DOMManipulator &rtrif; formatNode</a>"},{"title":"DOMManipulator#getNewTrackingList","link":"<a href=\"DOMManipulator.html#getNewTrackingList\">DOMManipulator &rtrif; getNewTrackingList</a>"},{"title":"DOMManipulator#observe","link":"<a href=\"DOMManipulator.html#observe\">DOMManipulator &rtrif; observe</a>"},{"title":"DOMManipulator#reformatDOM","link":"<a href=\"DOMManipulator.html#reformatDOM\">DOMManipulator &rtrif; reformatDOM</a>"},{"title":"DOMManipulator#scanDOM","link":"<a href=\"DOMManipulator.html#scanDOM\">DOMManipulator &rtrif; scanDOM</a>"},{"title":"DOMManipulator#setState","link":"<a href=\"DOMManipulator.html#setState\">DOMManipulator &rtrif; setState</a>"},{"title":"DOMManipulator#shouldUpdate","link":"<a href=\"DOMManipulator.html#shouldUpdate\">DOMManipulator &rtrif; shouldUpdate</a>"},{"title":"DOMManipulator#toggleObservation","link":"<a href=\"DOMManipulator.html#toggleObservation\">DOMManipulator &rtrif; toggleObservation</a>"},{"title":"determineNodeType","link":"<a href=\"global.html#determineNodeType\">Global &rtrif; determineNodeType</a>"},{"title":"parseAndAttachCSS","link":"<a href=\"global.html#parseAndAttachCSS\">Global &rtrif; parseAndAttachCSS</a>"},{"title":"start","link":"<a href=\"global.html#start\">Global &rtrif; start</a>"},{"title":"updatePreview","link":"<a href=\"global.html#updatePreview\">Global &rtrif; updatePreview</a>"},{"title":"updateSelectorValue","link":"<a href=\"global.html#updateSelectorValue\">Global &rtrif; updateSelectorValue</a>"},{"title":"updateStorage","link":"<a href=\"global.html#updateStorage\">Global &rtrif; updateStorage</a>"},{"title":"updateValueDisplay","link":"<a href=\"global.html#updateValueDisplay\">Global &rtrif; updateValueDisplay</a>"},{"title":"updateVisualDefaults","link":"<a href=\"global.html#updateVisualDefaults\">Global &rtrif; updateVisualDefaults</a>"},{"title":"watchSelector","link":"<a href=\"global.html#watchSelector\">Global &rtrif; watchSelector</a>"}];
+setupSearch(list)
+</script>
+
+ 
+<script type="text/javascript" src="scripts/misc.js"></script>
+</body>
+</html>
