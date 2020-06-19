@@ -35,9 +35,6 @@ An accessibility suite giving you control over what you read.
 - [License](#License)
 
 ## Developer Notes
-Hello there! Reading this means you're interested in the source code for this extension, and lucky you, it's actually completely *open source*.
-
-I'm Nabil Tharwat, a UXE based in Egypt. Feel free to contact me about anything and everything related to this codebase. If you want to request a feature, shoot me an issue on this repo or contact me on any platform. Wondering where to find me? Head to [iamnabil](https://iamnabil.me/about) and pick the platform you'd like. I'll let you read the documentation now. Have a lovely day!
 
 There's a DevLog/Timelapse video for the creation of this. It took me 1-2 full days. Find it here: <a href="">[Ally Reads! - Extension Development Devlog/Timelapse [Arabic]](https://www.youtube.com/watch?v=OeVvVMPCdbY)
 
