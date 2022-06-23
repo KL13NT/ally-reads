@@ -32,7 +32,7 @@
     "eslint-loader": "^3.0.3",
     "jest": "^25.1.0",
     "jsdoc": "^3.6.3",
-    "jsdom": "^16.1.0",
+    "jsdom": "^16.5.0",
     "rewire": "^4.0.1",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "web-ext": "^4.0.0",
